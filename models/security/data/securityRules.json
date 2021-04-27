@@ -1,0 +1,14 @@
+[
+    {
+        "securelist": "^main.*",
+        "roles": "Admin",
+        "permissions": "",
+        "whitelist": "",
+        "action": "override",
+        "redirect": "",
+        "overrideEvent": "auth.unauthorized",
+        "order": "1",
+        "match": "event",
+        "useSSL": false
+    }
+]
