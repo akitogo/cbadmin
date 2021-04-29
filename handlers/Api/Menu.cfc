@@ -2,11 +2,11 @@ component extends="coldbox.system.RestHandler"
 {
     javaSys = createObject("java", "java.lang.System");
 
-	property name="menuService"		inject="menuService@cbadmin";
+    property name="menuService" inject="menuService@cbadmin";
 
-	function sidebar( event, rc, prc ){
+    function sidebar( event, rc, prc )
+    {
         var sidebar = menuService.getRegion('sidebar');
-
         event.getResponse().setData({'menu' : customSerializer(sidebar)  });
     };
 
@@ -14,8 +14,10 @@ component extends="coldbox.system.RestHandler"
     ******************************************
     *           Internal functions
     ******************************************
-    ******************************************/    
-    private any function customSerializer( required Any object, ret = {}, returnDirectly = false ) {
+    ******************************************/
+
+    private any function customSerializer( required Any object, ret = {}, returnDirectly = false )
+    {
         var props   = getMetaData( arguments.object ).properties;
         var tmp     = {};
 
@@ -45,7 +47,4 @@ component extends="coldbox.system.RestHandler"
         structAppend(ret,tmp);
         return ret;
     }
-    
-    
-
 }
