@@ -15,21 +15,24 @@ component extends="Base"
             rc.id = rc.roleId;
     }
 
-    function index(event, rc, prc) {
+    function index(event, rc, prc)
+    {
         rc.ignoreDefaults = true;
         rc.includes ='description,numberOfPermissions,numberOfUsers,permissionList,role,roleId';
         
         super.index(event, rc, prc);
     }
 
-    function show(event, rc, prc) {
+    function show(event, rc, prc)
+    {
         if(rc.id == 0) {
             return emtpy(event, rc, prc);
         }
         super.show(event, rc, prc);
     }
 
-    function update(event, rc, prc) {
+    function update(event, rc, prc)
+    {
         if (rc.id == 0){
             super.create(event, rc, prc);
             return;
@@ -42,13 +45,14 @@ component extends="Base"
      * returns emtpy data for newly generate record
      *
      */
-    function emtpy(event, rc, prc) {
+    function emtpy(event, rc, prc)
+    {
         var data = {
             'role':                 '',
             'description':          '',
             'permissions':          [],
             'roleId':    0
         }
-        prc.response.setData( data );               
+        prc.response.setData( data );
     }
 }
