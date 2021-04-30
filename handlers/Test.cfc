@@ -29,10 +29,9 @@ component
         */
 
         // Deleting role.
-        /*
-        entity = roleService.getOrFail(3);
-        roleService.delete(entity);
-        */
+        //entity = roleService.getOrFail(14);
+        //roleService.delete(entity);
+        //abort;
 
         // Get role list.
         /*
