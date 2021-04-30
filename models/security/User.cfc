@@ -96,7 +96,7 @@ component persistent="true" entityname="cbUser" table="cbadmin_user" batchsize="
 		name							= "role"
 		notnull 					= "false"
 		fieldtype					= "many-to-one"
-		cascade						= "save-update"
+		//cascade						= "save-update"
 		cfc								= "cbadmin.models.security.Role"
 		fkcolumn					= "FK_roleId"
 		lazy							= "true";
