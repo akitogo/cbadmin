@@ -397,13 +397,13 @@ component singleton {
 		var mail = newMail(
 			to         = arguments.user.getEmail(),
 			from       = settings.cbadmin_outgoingEmail,
-			subject    = " Account was created for you",
+			subject    = "Account was created for you",
 			bodyTokens = bodyTokens
 		);
 
 		mail.setBody(
 			renderer.renderLayout(
-				view   = "/cbadmin/email_templates/author_welcome",
+				view   = "/cbadmin/email_templates/user_welcome",
 				layout = "/cbadmin/email_templates/layouts/email"
 			)
 		);
@@ -438,8 +438,8 @@ component singleton {
 			ip          : settingService.getRealIP(),
 			linkTimeout : RESET_TOKEN_TIMEOUT,
 			siteName    : "",
-			linkToken   : CBHelper.linkAdmin(
-				event = "security.verifyReset",
+			linkToken   : CBHelper.linkFrontend(
+				event = "reset",
 				ssl   = settings.cbadmin_admin_ssl
 			) & "?token=#token#",
 			issuedBy    : "",

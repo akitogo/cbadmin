@@ -42,13 +42,24 @@ component accessors="true" singleton threadSafe{
 		if( structKeyExists( arguments, "defaultValue" ) ){ arguments.default = arguments.defaultValue; }
 		return resourceService.getResource( argumentCollection=arguments );
 	}
+
+	/**
+	* Link to the frontent
+	* @event An optional event to link to
+	* @ssl	Use SSL or not, defaults to false.
+	*/
+	function linkFrontend( event="", boolean ssl=false )
+	{
+		return getRequestContext().buildLink( to="#arguments.event#", ssl=arguments.ssl );
+	}
+
 	/**
 	* Link to the admin
 	* @event An optional event to link to
 	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkAdmin( event="", boolean ssl=false ){
-		return getRequestContext().buildLink( linkto=adminRoot() & ".#arguments.event#", ssl=arguments.ssl );
+		return getRequestContext().buildLink( to=adminRoot() & ".#arguments.event#", ssl=arguments.ssl );
 	}
 
 	/**
@@ -78,5 +89,5 @@ component accessors="true" singleton threadSafe{
 	*/
 	function linkAdminLogin( boolean ssl=false ){
 		return getRequestContext().buildLink( linkto=adminRoot() & "/security/login", ssl=arguments.ssl );
-	}				
+	}
 }

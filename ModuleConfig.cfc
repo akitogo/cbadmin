@@ -1,4 +1,4 @@
-﻿/**
+/**
 * ContentBox - A Modular Content Platform
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
@@ -38,7 +38,7 @@ component {
 
 
 		// i18n
-		i18n = {
+		cbi18n = {
 			resourceBundles = {
 		    	"cbcore" = "#moduleMapping#/i18n/cbcore",
 		    	"login" = "#moduleMapping#/i18n/login"

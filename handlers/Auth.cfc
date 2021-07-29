@@ -33,11 +33,13 @@ component extends="coldbox.system.RestHandler"
         event.getResponse()
             .setData({
                 'token': token,
+                'tokenExpiration': 0,
+                'tokenValidity': jwtAuth().getSettings().jwt.expiration * 60,
                 'userId': user.getId(),
                 'firstName': user.getFirstname(),
                 'lastName': user.getLastname()
-            })
-            .addMessage("Bearer token created and it expires in #jwtAuth().getSettings().jwt.expiration# minutes");
+            });
+            //.addMessage("Bearer token created and it expires in #jwtAuth().getSettings().jwt.expiration# minutes");
     }
 
     /**
@@ -107,7 +109,12 @@ component extends="coldbox.system.RestHandler"
         userService.createNewUser( oUser );
         announce( "cbadmin_postNewUserSave", { user : oUser } );
 
-        event.getResponse().setData( "User registered" );
+        // We need to reset the view because otherwise the sendPasswordReminder method above will throw
+        // a 'missinginclude' exception while trying to load /layouts/admin.cfm.
+        event.setView('');
+
+        event.getResponse()
+            .setData( "User registered" );
     }
 
     /**
@@ -116,30 +123,34 @@ component extends="coldbox.system.RestHandler"
     */
     function reset( event, rc, prc )
     {
-        param rc.email        = '';
-        param rc.firstname    ='';
-        param rc.lastname    ='';
+        param rc.email = '';
+        param rc.firstname ='';
+        param rc.lastname ='';
 
-        var errors             = [];
+        var errors = [];
 
         rc.email = antiSamy.htmlSanitizer( rc.email );
 
-        if( !trim( rc.email ).length() )
+        if ( !trim( rc.email ).length() ) {
             arrayAppend( errors, resourceService.getResource( 'validation.need_email@login' ) );
-        if( !trim( rc.firstname ).length() )
+        }
+        if ( !trim( rc.firstname ).length() ) {
             arrayAppend( errors, resourceService.getResource( 'validation.need_firstname@login' ) );
-        if( !trim( rc.lastname ).length() )
+        }
+        if ( !trim( rc.lastname ).length() ) {
             arrayAppend( errors, resourceService.getResource( 'validation.need_email@login' ) );
-
-        // only check in database if all information is provided
-        if( !arrayLen( errors ) ){
-            var oUser = userService.findWhere( { email = rc.email, firstname = rc.firstname, lastname = rc.lastname } );
-
-            if( isNull( oUser ) OR !oUser.isLoaded() )
-                arrayAppend( errors, resourceService.getResource( 'validation.no_user@login' ) );
         }
 
-        if( arrayLen( errors ) ){
+        // only check in database if all information is provided
+        if ( !arrayLen( errors ) ) {
+            var oUser = userService.findWhere( { email = rc.email, firstname = rc.firstname, lastname = rc.lastname } );
+
+            if ( isNull( oUser ) OR !oUser.isLoaded() ) {
+                arrayAppend( errors, resourceService.getResource( 'validation.no_user@login' ) );
+            }
+        }
+
+        if ( arrayLen( errors ) ){
             announce( "cbadmin_onInvalidPasswordReminder", { errors = errors, email = rc.email } );
 
             event.getResponse().setError(true).setMessages(errors);
@@ -148,8 +159,11 @@ component extends="coldbox.system.RestHandler"
 
         securityService.sendPasswordReminder( oUser );
 
-        // we need to reset the view, not sure why
+        // We need to reset the view because otherwise the sendPasswordReminder method above will throw
+        // a 'missinginclude' exception while trying to load /layouts/admin.cfm.
         event.setView('');
-        event.getResponse().setData( resourceService.getResource( resource='messages.reminder_sent@login', values="15" ) );
+
+        event.getResponse()
+            .addMessage(resourceService.getResource( resource='messages.reminder_sent@login', values="15" ));
     }
 }
