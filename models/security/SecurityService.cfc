@@ -485,13 +485,18 @@ component singleton {
 	 * @returns {error, user}
 	 */
 	struct function validateResetToken( required token ){
-		var results  = { "error" : false, "user" : "" };
+		var results  = {
+			"error" : false
+			, "user" : ""
+			, "messages" : []
+		};
 		var cacheKey = "reset-token-#cgi.server_name#-#arguments.token#";
 		var userId = cache.get( cacheKey );
 
 		// If token not found, don't reset and return back
 		if ( isNull( userId ) ) {
 			results.error = true;
+			results.messages = [ "Invalid token." ];
 			return results;
 		};
 
@@ -499,6 +504,7 @@ component singleton {
 		results.user = userService.get( userId );
 		if ( isNull( results.user ) ) {
 			results.error = true;
+			results.messages = [ "Unable to identify user." ];
 			return results;
 		};
 
@@ -558,7 +564,8 @@ component singleton {
 		var mail = newMail(
 			to         = arguments.user.getEmail(),
 			from       = settings.cbadmin_outgoingEmail,
-			subject    = "#defaultSite.getName()# Password Reset Completed",
+			//subject    = "#defaultSite.getName()# Password Reset Completed",
+			subject    = "Password Reset Completed",
 			bodyTokens = bodyTokens
 		);
 		// ,body=renderer.$get().renderExternalView(view="/cbadmin/email_templates/password_reminder" )
@@ -571,6 +578,7 @@ component singleton {
 		// send it out
 		mailService.send( mail );
 
+		results.messages = "Your password was successfully reset.";
 		return results;
 	}
 

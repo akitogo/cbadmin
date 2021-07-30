@@ -117,6 +117,60 @@ component extends="coldbox.system.RestHandler"
             .setData( "User registered" );
     }
 
+    function checkToken(event, rc, prc)
+    {
+        var validation = securityService.validateResetToken(rc.token);
+
+        event.getResponse()
+            .setError(validation.error);
+        for (var msg in validation.messages) {
+            event.getResponse()
+                .addMessage(msg);
+        }
+    }
+
+    function saveNewPassword(event, rc, prc)
+    {
+        // First validate the token.
+        this.checkToken(event, rc, prc);
+        if (event.getResponse().getError()) {
+            return;
+        }
+
+        // Makre sure that the passwords are identical.
+        if (Compare(rc.newPassword, rc.repeatPassword)) {
+            event.getResponse()
+                .setError(true)
+                .addMessage('Passwords must be identical!');
+            return;
+        }
+
+        // Finally, save the new password.
+        var validation = securityService.validateResetToken(rc.token);
+        var result = securityService.resetUserPassword(rc.token, validation.user, rc.newPassword);
+
+        // We need to reset the view because otherwise the sendPasswordReminder method above will throw
+        // a 'missinginclude' exception while trying to load /layouts/admin.cfm.
+        event.setView('');
+
+        event.getResponse()
+            .setError(result.error)
+        for (var msg in result.messages) {
+            event.getResponse()
+                .addMessage(msg);
+        }
+    }
+
+    // This is just a test function to quickly create a test token for resetting passwords.
+    function newToken(event)
+    {
+        var user = securityService.retrieveUserByUsername('slawek')
+        var token = securityService.generateResetToken(user);
+
+        event.getResponse()
+            .setData(token);
+    }
+
     /**
     * Do lost password reset
     * requires email, firstnam and lastname to identify user
