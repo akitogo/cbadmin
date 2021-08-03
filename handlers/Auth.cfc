@@ -8,7 +8,7 @@ component extends="coldbox.system.RestHandler"
     property name="antiSamy"            inject="antisamy@cbantisamy";
     property name="resourceService"     inject="resourceService@cbi18n";
 
-    this.allowedMethods = { 
+    this.allowedMethods = {
         'login'         = "POST",
         'logout'        = "POST,GET",
         'unauthorized'  = "GET,POST",
@@ -109,17 +109,35 @@ component extends="coldbox.system.RestHandler"
         userService.createNewUser( oUser );
         announce( "cbadmin_postNewUserSave", { user : oUser } );
 
-        // We need to reset the view because otherwise the sendPasswordReminder method above will throw
+        // We need to reset the view because otherwise the createNewUser method above will throw
         // a 'missinginclude' exception while trying to load /layouts/admin.cfm.
         event.setView('');
 
         event.getResponse()
-            .setData( "User registered" );
+            .setData( "New account successfully created. Please check your email and confirm your account to activate it." );
     }
 
-    function checkToken(event, rc, prc)
+    /**
+     * Activate user's account with token.
+     */
+    function activateAccount(event, rc, prc)
     {
-        var validation = securityService.validateResetToken(rc.token);
+        var activation = securityService.activateAccount(rc.token);
+        event.getResponse().setError(activation.error);
+        for (var msg in activation.messages) {
+            event.getResponse().addMessage(msg);
+        }
+
+        // We need to reset the view, otherwise a 'missinginclude' exception will be thrown.
+        event.setView('');
+    }
+
+    /**
+     * Check if the account activation token is valid.
+     */
+    function checkAccountActivationToken(event, rc, prc)
+    {
+        var validation = securityService.validateAccountActivationToken(rc.token);
 
         event.getResponse()
             .setError(validation.error);
@@ -129,10 +147,24 @@ component extends="coldbox.system.RestHandler"
         }
     }
 
+    /**
+     * Check if the password reseet token is valid.
+     */
+    function checkPasswordResetToken(event, rc, prc)
+    {
+        var validation = securityService.validatePasswordResetToken(rc.token);
+
+        event.getResponse().setError(validation.error);
+        for (var msg in validation.messages) {
+            event.getResponse().addMessage(msg);
+        }
+    }
+
     function saveNewPassword(event, rc, prc)
     {
-        // First validate the token.
-        this.checkToken(event, rc, prc);
+        // This check might appear redundant here, but is required as we need the user
+        // object to pass to the securityService.resetUserPassword() method below.
+        this.checkPasswordResetToken(event, rc, prc);
         if (event.getResponse().getError()) {
             return;
         }
@@ -146,7 +178,7 @@ component extends="coldbox.system.RestHandler"
         }
 
         // Finally, save the new password.
-        var validation = securityService.validateResetToken(rc.token);
+        var validation = securityService.validatePasswordResetToken(rc.token);
         var result = securityService.resetUserPassword(rc.token, validation.user, rc.newPassword);
 
         // We need to reset the view because otherwise the sendPasswordReminder method above will throw
@@ -161,20 +193,10 @@ component extends="coldbox.system.RestHandler"
         }
     }
 
-    // This is just a test function to quickly create a test token for resetting passwords.
-    function newToken(event)
-    {
-        var user = securityService.retrieveUserByUsername('slawek')
-        var token = securityService.generateResetToken(user);
-
-        event.getResponse()
-            .setData(token);
-    }
-
     /**
-    * Do lost password reset
-    * requires email, firstnam and lastname to identify user
-    */
+     * Do lost password reset
+     * requires email, firstnam and lastname to identify user
+     */
     function reset( event, rc, prc )
     {
         param rc.email = '';
@@ -219,5 +241,49 @@ component extends="coldbox.system.RestHandler"
 
         event.getResponse()
             .addMessage(resourceService.getResource( resource='messages.reminder_sent@login', values="15" ));
+    }
+
+    /*******************************************
+     * 
+     * Some test functions only for development.
+     * 
+     ******************************************/
+
+    // This is jsut a test function to get the cache keys.
+    function testGetCacheKeys()
+    {
+        abort;
+        var tmp = securityService.getCacheKeys();
+        dump(tmp);
+        abort;
+    }
+
+    // This is just a test function to quickly create an account activation token.
+    function newAccountActivationToken(event, rc)
+    {
+        abort;
+        var userId = event.getValue('userId', '');
+        var oUser = securityService.retrieveUserById(userId, false);
+
+        if (!IsInstanceOf(oUser, 'User')) {
+            event.getResponse().setError(true).addMessage('Could not find user.');
+            return;
+        }
+
+        var token = securityService.generateAccountActivationToken(oUser);
+
+        event.getResponse().setData({
+            'token': token
+        });
+    }
+
+    // This is just a test function to quickly create a test token for resetting passwords.
+    function newPasswordResetToken(event)
+    {
+        abort;
+        var user = securityService.retrieveUserByUsername('slawek')
+        var token = securityService.generatePasswordResetToken(user);
+
+        event.getResponse().setData(token);
     }
 }

@@ -298,25 +298,25 @@ component singleton {
 		return isSamePw;
 	}
 
-	struct function retrieveUserById(required id)
+	any function retrieveUserById(required id, isActive = true)
 	{
 		// Find username
 		var oUser = userService.findWhere( {
 			userId  : arguments.id,
-			isActive  : true,
+			isActive  : arguments.isActive,
 			isDeleted : false
 		} );
 
 		// Verify if user found
 		if ( isNull( oUser ) ) {
 			// return not authenticated
-			return null;
+			return false;
 		}
 
 		return oUser;
 	}
 
-	struct function retrieveUserByUsername(required string username)
+	any function retrieveUserByUsername(required string username)
 	{
 		// Find username
 		var oUser = userService.findWhere( {
@@ -328,7 +328,7 @@ component singleton {
 		// Verify if user found
 		if ( isNull( oUser ) ) {
 			// return not authenticated
-			return null;
+			return false;
 		}
 
 		return oUser;
@@ -348,7 +348,7 @@ component singleton {
 	 *
 	 * @user The user to create the reset token for.
 	 */
-	string function generateResetToken( required User user ){
+	string function generatePasswordResetToken( required User user ){
 		// Store Security Token For X minutes
 		var token = hash( arguments.user.getEmail() & arguments.user.getuserId() & now() );
 		cache.set(
@@ -361,7 +361,26 @@ component singleton {
 	}
 
 	/**
-	 * Sends a new user their reminder to reset their password and log in to their account
+	 * This function will store an account activation token in hash for the user to pickup on
+	 * account activation (after creating a new account).
+	 *
+	 * @user The user to create the account activation token for.
+	 */
+	string function generateAccountActivationToken( required User user ){
+		// Store Security Token For X minutes
+		var token = hash( arguments.user.getEmail() & arguments.user.getuserId() & now() );
+		cache.set(
+			"activation-token-#cgi.server_name#-#token#",
+			arguments.user.getuserId(),
+			RESET_TOKEN_TIMEOUT,
+			RESET_TOKEN_TIMEOUT
+		);
+		return token;
+	}
+
+	/**
+	 * Account creation email. Sends a confirmation email that an account was created,
+	 * and requires the user to confirm this with a confirmation link.
 	 *
 	 * @user The user to send the reminder to
 	 *
@@ -369,7 +388,7 @@ component singleton {
 	 */
 	struct function sendNewUserReminder( required User user ){
 		// Generate security token
-		var token = generateResetToken( arguments.user );
+		var token = generateAccountActivationToken( arguments.user );
 
 		// get settings + default site
 		var settings    = variables.settingService.getAllSettings();
@@ -380,14 +399,10 @@ component singleton {
 			email       : arguments.user.getEmail(),
 			username    : arguments.user.getUsername(),
 			linkTimeout : RESET_TOKEN_TIMEOUT,
-			linkToken   : CBHelper.linkAdmin(
-				event = "security.verifyReset",
+			linkToken   : CBHelper.linkFrontend(
+				event = "register",
 				ssl   = settings.cbadmin_admin_ssl
 			) & "?token=#token#",
-			resetLink : CBHelper.linkAdmin(
-				event = "security.lostPassword",
-				ssl   = settings.cbadmin_admin_ssl
-			),
 			siteName    : "",
 			issuedBy    : "",
 			issuedEmail : ""
@@ -403,7 +418,7 @@ component singleton {
 
 		mail.setBody(
 			renderer.renderLayout(
-				view   = "/cbadmin/email_templates/user_welcome",
+				view   = "/cbadmin/email_templates/user_new_confirm",
 				layout = "/cbadmin/email_templates/layouts/email"
 			)
 		);
@@ -413,8 +428,8 @@ component singleton {
 	}
 
 	/**
-	 * Send password reminder email, this verifies that the email is valid and they must click on the token
-	 * link in order to reset their password.
+	 * Send email with password reset link. This verifies that the email is valid and
+	 * the user must click on the token link in order to reset their password.
 	 * @user 		The user to send the reminder to
 	 * @adminIssued 	Was this reset issued by a user or an admin
 	 * @issuer 		The admin that issued the reset
@@ -427,7 +442,7 @@ component singleton {
 		User issuer
 	){
 		// Generate security token
-		var token = generateResetToken( arguments.user );
+		var token = generatePasswordResetToken( arguments.user );
 
 		// get settings
 		var settings    = variables.settingService.getAllSettings();
@@ -484,7 +499,7 @@ component singleton {
 	 *
 	 * @returns {error, user}
 	 */
-	struct function validateResetToken( required token ){
+	struct function validatePasswordResetToken( required token ){
 		var results  = {
 			"error" : false
 			, "user" : ""
@@ -511,8 +526,49 @@ component singleton {
 		return results;
 	}
 
+	// test function, should be commented out
+	function getCacheKeys()
+	{
+		abort;
+		return cache.getKeys();
+	}
+
 	/**
-	 * Resets a user's password.
+	 * This method validates an incoming account activation token to figure out their user.
+	 * The token is not removed just yet. It will be removed once the account is activated.
+	 * @token The security token
+	 *
+	 * @returns {error, user}
+	 */
+	struct function validateAccountActivationToken( required token ){
+		var results  = {
+			"error" : false
+			, "user" : ""
+			, "messages" : []
+		};
+		var cacheKey = "activation-token-#cgi.server_name#-#arguments.token#";
+		var userId = cache.get( cacheKey );
+
+		// If the token is not found, return an error.
+		if ( isNull( userId ) ) {
+			results.error = true;
+			results.messages = [ "Invalid account activation token." ];
+			return results;
+		};
+
+		// Verify the user of the token
+		results.user = userService.get( userId );
+		if ( isNull( results.user ) ) {
+			results.error = true;
+			results.messages = [ "Unable to identify user." ];
+			return results;
+		};
+
+		return results;
+	}
+
+	/**
+	 * Resets a user's password once the user clicks on the change password URL from the email.
 	 * @token 	Security token
 	 * @user 	The user you are reseting the password for
 	 * @password The password you have chosen
@@ -582,6 +638,67 @@ component singleton {
 		return results;
 	}
 
+	struct function activateAccount(required token)
+	{
+		/*
+		var oUser = this.retrieveUserByUsername('sm+123@akitogo.com');
+		var token = this.generateAccountActivationToken(oUser);
+
+		// Validate the token and return if error.
+		var validation = this.validateAccountActivationToken(token);
+		if (validation.error) {
+			return validation;
+		}
+		*/
+
+		var results  = { "error" : false, "messages" : "" };
+		var cacheKey = "activation-token-#cgi.server_name#-#arguments.token#";
+		var userId = cache.get( cacheKey );
+
+		// If token not found, don't reset and return back
+		if ( isNull( userId ) ) {
+			results.error    = true;
+			results.messages = "This account activation token does not exist or has expired";
+			return results;
+		};
+		var oUser = this.retrieveUserById(id = userId, isActive = false);
+
+		// Remove token now that we have the data and it has been validated
+		cache.clear( cacheKey );
+
+		// get settings
+		var settings    = settingService.getAllSettings();
+
+		// set it in the user and save reset password
+		oUser.setIsActive( true );
+		userService.saveUser( user = oUser );
+
+		// get mail payload
+		var bodyTokens = {
+			name       : oUser.getName(),
+			ip         : settingService.getRealIP(),
+			linkLogin  : CBHelper.linkFrontendLogin( ssl = settings.cbadmin_admin_ssl ),
+			siteName   : "",
+			adminEmail : settings.cbadmin_email
+		};
+		var mail = newMail(
+			to         = oUser.getEmail(),
+			from       = settings.cbadmin_outgoingEmail,
+			subject    = "Your account has been activated!",
+			bodyTokens = bodyTokens
+		);
+		mail.setBody(
+			renderer.renderLayout(
+				view   = "/cbadmin/email_templates/user_welcome",
+				layout = "/cbadmin/email_templates/layouts/email"
+			)
+		);
+		// send it out
+		mailService.send( mail );
+
+		results.messages = "Your account was successfully activated.";
+		return results;
+	}
 
 	/**
 	 * Get remember me cookie

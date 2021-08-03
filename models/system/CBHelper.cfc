@@ -83,6 +83,7 @@ component accessors="true" singleton threadSafe{
 	struct function getRequestCollection( boolean private=false ){
 		return getRequestContext().getCollection( private=arguments.private );
 	}
+
 	/**
 	* Link to the admin login
 	* @ssl	Use SSL or not, defaults to false.
@@ -90,4 +91,13 @@ component accessors="true" singleton threadSafe{
 	function linkAdminLogin( boolean ssl=false ){
 		return getRequestContext().buildLink( linkto=adminRoot() & "/security/login", ssl=arguments.ssl );
 	}
+
+	/**
+	* Link to the frontend login
+	* @ssl	Use SSL or not, defaults to false.
+	*/
+	function linkFrontendLogin( boolean ssl=false ){
+		return getRequestContext().buildLink( to="login", ssl=arguments.ssl );
+	}
+
 }

@@ -61,7 +61,7 @@ component extends="coldbox.system.Interceptor"{
 			&&
 			prc.oUser.getIsPasswordReset()
 		){
-			var token = securityService.generateResetToken( prc.oUser );
+			var token = securityService.generatePasswordResetToken( prc.oUser );
 			getInstance( "messagebox@cbMessagebox" ).info(
 				prc.CBHelper.r( "messages.password_reset_detected@security" )
 			);
