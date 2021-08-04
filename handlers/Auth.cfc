@@ -4,6 +4,7 @@ component extends="coldbox.system.RestHandler"
     property name="roleService"         inject="roleService@cbadmin";
     property name="userService"         inject="userService@cbadmin";
     property name="languageService"     inject="CfgLanguageService@cbadmin";
+    property name="cbadminSettings" inject="coldbox:modulesettings:cbadmin";
 
     property name="antiSamy"            inject="antisamy@cbantisamy";
     property name="resourceService"     inject="resourceService@cbi18n";
@@ -92,17 +93,32 @@ component extends="coldbox.system.RestHandler"
         oUser.setLanguage( language );
         oUser.setPreferences( {} );
 
-        // validate it
-        var vResults = validateModel( target = oUser);
-        if ( vResults.hasErrors() ) {
-            var sErrors = {};
-            for (var el in vResults.getErrors() ){
-                sErrors[lcase(el.getField())] = {'valid': false ,'error': el.getMessage()};
+        // Validation error struct.
+        var vErrors = {};
+
+        // If the cbadmin configuration requires accepting a privacy policy, check if it was accepted.
+        var privacyPolicyPass = true;
+        if (cbadminSettings.privacy_policy_required) {
+            privacyPolicyPass = false;
+            if (StructKeyExists(rc, "acceptPrivacyPolicy") && rc.acceptPrivacyPolicy == true){
+                privacyPolicyPass = true;
             }
-        
-            event.getResponse().setError(true).setData(sErrors);
+        }
+
+        if (!privacyPolicyPass) {
+            vErrors['acceptPrivacyPolicy'] = { 'valid': false, 'error': 'You must accept the privacy policy.' };
+            event.getResponse().setError(true);
+        }
+
+        // Validate the oUser object.
+        var vResults = validateModel( target = oUser);
+        if ( vResults.hasErrors() || event.getResponse().getError() === true) {
+            for (var el in vResults.getErrors() ){
+                vErrors[lcase(el.getField())] = {'valid': false ,'error': el.getMessage()};
+            }
+            event.getResponse().setError(true).setData(vErrors);
             return;
-        } 
+        }
 
         // we don't have any errors, so we create a new user
         announce( "cbadmin_preNewUserSave", { user : oUser } );

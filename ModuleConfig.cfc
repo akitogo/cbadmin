@@ -5,49 +5,45 @@
 * ---
 * ContentBox Admin Module
 */
-component {
-
+component
+{
 	// Module Properties
-	this.title 				= "";
-	this.author 			= "";
-	this.webURL 			= "";
-	this.description 		= "";
-	this.version			= "";
-	this.viewParentLookup 	= true;
-	this.layoutParentLookup = true;
-	this.entryPoint			= "cbadmin";
-	this.dependencies 		= [ "cbi18n","cbmailservices","cbSecurity","cbmessagebox","bcrypt"];
+	this.title								= "";
+	this.author								= "";
+	this.webURL								= "";
+	this.description					= "";
+	this.version							= "";
+	this.viewParentLookup			= true;
+	this.layoutParentLookup		= true;
+	this.entryPoint						= "cbadmin";
+	this.dependencies					= [ "cbi18n","cbmailservices","cbSecurity","cbmessagebox","bcrypt"];
 
 	/**
 	* Configure Module
 	*/
-	function configure(){
-
+	function configure()
+	{
 		// Layout Settings
 		layoutSettings = { defaultLayout = "admin.cfm" };
 
 		// Module Settings
 		settings = {
 			// ForgeBox Settings
-			forgeBoxURL 	 = "",
-			forgeBoxEntryURL = "",
-			using_i18n			= true,
-			languages 			= [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
-
+			forgeBoxURL									= "",
+			forgeBoxEntryURL						= "",
+			using_i18n									= true,
+			languages 									= [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ],
+			privacy_policy_required			= true
 		};
 
-
-		// i18n
 		cbi18n = {
 			resourceBundles = {
-		    	"cbcore" = "#moduleMapping#/i18n/cbcore",
-		    	"login" = "#moduleMapping#/i18n/login"
-
-		  	},
-		  	defaultLocale = "en_US",
-		  	localeStorage = "cookie"
+				"cbcore" = "#moduleMapping#/i18n/cbcore",
+				"login" = "#moduleMapping#/i18n/login"
+			},
+			defaultLocale = "en_US",
+			localeStorage = "cookie"
 		};
-
 
 		// Parent Settings
 		parentSettings = {
@@ -59,13 +55,13 @@ component {
 		// SES Routes
 		routes = [
 			{ pattern="/login/:action?", handler="login", action="login" },
-
 			{ pattern="/:handler/:action?" },
 		];
 
 		// for route generation, resources see:
 		// https://coldbox-orm.ortusbooks.com/orm-events/automatic-rest-crud#register-the-resource
 		resources = [
+			{resource = 'config', handler = 'config'},
 			{resource = 'api/user', handler = 'api.user',parameterName='userId'},
 			{resource = 'api/role', handler = 'api.role',parameterName='roleId'},
 			{resource = 'api/permission', handler = 'api.permission',parameterName='permissionId'},
@@ -110,8 +106,8 @@ component {
 	/*
 	* On Module Load
 	*/
-	function onLoad(){
-
+	function onLoad()
+	{
 		// Startup localization settings
 		//if( controller.getSetting( 'using_i18n' ) ){
 			// Load resource bundles here when ready
@@ -125,12 +121,9 @@ component {
 		var settings = controller.getSetting('moduleSettings')['cbsecurity'];
 		controller.getInterceptorService()
 			.registerInterceptor(
-				interceptorClass		= "cbsecurity.interceptors.Security",
-				interceptorProperties	= settings,
-				interceptorName			= "cbsecurity@global"
-		);		
-
+				interceptorClass					= "cbsecurity.interceptors.Security",
+				interceptorProperties			= settings,
+				interceptorName						= "cbsecurity@global"
+		);
 	}
-
-
 }
