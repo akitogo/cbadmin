@@ -1,4 +1,4 @@
-/**
+﻿/**
 * ContentBox - A Modular Content Platform
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
@@ -100,6 +100,8 @@ component
 		];
 
 		binder.map( "SystemUtil@cbadmin" ).to( "coldbox.system.core.util.Util" );
+		//todo
+		//binder.map( "cryptlib@cbadmin" ).to( "coldbox.system.core.util.Util" );
 		
 	}
 

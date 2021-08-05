@@ -1,6 +1,8 @@
 component extends="Base"
 {
     property name="bCrypt"                      inject = "BCrypt@BCrypt";
+    // todo
+    //property name="cryptlib"                      inject = "cryptlib@cbadmin";
     property name="roleSerivce"                 inject = "roleService@cbadmin";
     property name="languageService"             inject = "CfgLanguageService@cbadmin";
     property name="permissionGroupService"      inject = "permissionGroupService@cbadmin";
@@ -52,7 +54,7 @@ component extends="Base"
         //if( isArray(rc.permissionGroups) ) {
         //    for (var ae in rc.permissionGroups) {
         //        var pg = permissionGroupService.get(ae.permissionGroupId);
-        //        oUser.addPermissionGroup(pg);        
+        //        oUser.addPermissionGroup(pg);
         //    }
         //}
 
