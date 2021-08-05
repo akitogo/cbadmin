@@ -1,7 +1,7 @@
 {
     "name":"ColdBox Admin",
-    "version":"0.0.0-alpha.1",
-    "location":"https://github.com/akitogo/cbadmin/archive/refs/tags/v@build.version@.zip",
+    "version":"0.0.0-alpha.2",
+    "location":"https://github.com/akitogo/cbadmin/archive/refs/tags/v0.0.0-alpha.2.zip",
     "author":"Akitogo Internet and Media Applications GmbH <info@akitogo.com>",
     "slug":"cbadmin",
     "type":"modules",
