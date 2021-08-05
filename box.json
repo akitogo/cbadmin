@@ -1,6 +1,6 @@
 {
     "name":"ColdBox Admin",
-    "version":"0.0.0-alpha.5",
+    "version":"0.0.1",
     "author":"Akitogo Internet and Media Applications GmbH <info@akitogo.com>",
     "slug":"cbadmin",
     "type":"modules",
