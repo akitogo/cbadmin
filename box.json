@@ -1,6 +1,6 @@
 {
     "name":"cbadmin",
-    "version":"0.0.2-alpha.2",
+    "version":"0.0.2-alpha.4",
     "author":"Akitogo Internet and Media Applications GmbH <info@akitogo.com>",
     "slug":"cbadmin",
     "type":"modules",
@@ -27,9 +27,11 @@
         "/tests/"
     ],
     "dependencies":{
-        "cbsecurity":"^2.12.0+178"
+        "cbsecurity":"^2.12.0+178",
+        "cbmailservices":"^1.6.0+49"
     },
     "installPaths":{
-        "cbsecurity":"modules/cbsecurity/"
+        "cbsecurity":"modules/cbsecurity/",
+        "cbmailservices":"modules/cbmailservices/"
     }
 }
