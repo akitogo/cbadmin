@@ -1,6 +1,6 @@
 {
-    "name":"ColdBox Admin",
-    "version":"0.0.2-alpha.1",
+    "name":"cbadmin",
+    "version":"0.0.2-alpha.2",
     "author":"Akitogo Internet and Media Applications GmbH <info@akitogo.com>",
     "slug":"cbadmin",
     "type":"modules",
@@ -10,7 +10,7 @@
         "type":"zip",
         "URL":"https://github.com/akitogo/cbadmin"
     },
-    "shortDescription":"This module provides an admin API with user, role and permission management for ColdBox applications, secured with JWT (JSON Web Tokens).",
+    "shortDescription": "This module provides a JWT-secured, back-end API for user, role and permission management, intended for ColdBox applications.",
     "license":[
         {
             "type":"Apache2",
