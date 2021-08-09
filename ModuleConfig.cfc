@@ -16,7 +16,7 @@ component
 	this.viewParentLookup			= true;
 	this.layoutParentLookup		= true;
 	this.entryPoint						= "cbadmin";
-	this.dependencies					= [ "cbi18n", "cbmailservices", "cbSecurity", "cbmessagebox", "bcrypt"];
+	this.dependencies					= [ "cborm", "cbmailservices", "cbSecurity", "cbmessagebox", "bcrypt" ];
 
 	/**
 	* Configure Module

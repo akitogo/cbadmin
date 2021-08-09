@@ -26,9 +26,3 @@ box install cbadmin
 ```
 
 This will download cbadmin along with all required dependencies. You can then use the cbadmin API in your application.
-
----
-
-### THE DAILY BREAD
-
- > "I am the way, and the truth, and the life; no one comes to the Father, but by me (JESUS)" Jn 14:1-12
