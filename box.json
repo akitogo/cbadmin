@@ -29,11 +29,13 @@
     "dependencies":{
         "cbsecurity":"^2.12.0+178",
         "cbmailservices":"^1.6.0+49",
-        "cborm":"^3.4.0+211"
+        "cborm":"^3.4.0+211",
+        "cbmessagebox":"^4.0.0+58"
     },
     "installPaths":{
         "cbsecurity":"modules/cbsecurity/",
         "cbmailservices":"modules/cbmailservices/",
-        "cborm":"modules/cborm/"
+        "cborm":"modules/cborm/",
+        "cbmessagebox":"modules/cbmessagebox/"
     }
 }
