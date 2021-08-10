@@ -110,6 +110,10 @@ component
 	*/
 	function onLoad()
 	{
+		var settingService = wirebox.getInstance( "settingService@cbadmin" );
+		// Pre-flight check settings
+		settingService.preFlightCheck();
+
 		// Startup localization settings
 		//if( controller.getSetting( 'using_i18n' ) ){
 			// Load resource bundles here when ready
