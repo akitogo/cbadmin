@@ -1,0 +1,8 @@
+{
+  "description": "Permission object",
+  "content": {
+    "application/json": {
+      "schema": { "$ref": "/modules/cbadmin/resources/apidocs/Permission/object.json" }
+    }
+  }
+}

@@ -15,14 +15,31 @@ component extends="Base"
             rc.id = rc.roleId;
     }
 
+    /**
+     * @hint Get a list of existing roles
+     * @param-qs ~params/queryString.json
+     * @response-200 ~Role/responseMany.json
+     */
     function index(event, rc, prc)
     {
         rc.ignoreDefaults = true;
         rc.includes ='description,numberOfPermissions,numberOfUsers,permissionList,role,roleId';
-        
         super.index(event, rc, prc);
     }
 
+    /**
+     * @hint Create a new role
+     * @requestBody ~Role/requestBody.json
+     */
+    function create(event, rc, prc)
+    {
+        super.create(event, rc, prc);
+    }
+
+    /**
+     * @hint Get details of a specific role
+     * @response-200 ~Role/responseOne.json
+     */
     function show(event, rc, prc)
     {
         if(rc.id == 0) {
@@ -31,6 +48,10 @@ component extends="Base"
         super.show(event, rc, prc);
     }
 
+    /**
+     * @hint Update an exising role
+     * @requestBody ~Role/requestBody.json
+     */
     function update(event, rc, prc)
     {
         if (rc.id == 0){
@@ -38,7 +59,14 @@ component extends="Base"
             return;
         }
         super.update(event, rc, prc);
+    }
 
+    /**
+     * @hint Delete an existing role
+     */
+    function delete(event, rc, prc)
+    {
+        super.delete(event, rc, prc);
     }
 
     /**

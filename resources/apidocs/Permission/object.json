@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "required": ["permission"],
+  "properties": {
+    "permissionId": {
+      "description": "ID of the permission (this field is required for PUT/PATCH requests)",
+      "type": "integer",
+      "example": 123
+    },
+    "permission": {
+      "description": "Permission name",
+      "type": "string",
+      "example": "Create user"
+    },
+    "description": {
+      "description": "Permission description",
+      "type": "string",
+      "example": "Permission allowing the creation of new users"
+    },
+    "permissionGroups": {
+      "description": "Array of permission groups which use this permission",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "example": [1, 20, 54]
+    },
+    "roles": {
+      "description": "Array of roles which use this permission",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "example": [8, 15, 35]
+    }
+  }
+}

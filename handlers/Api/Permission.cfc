@@ -17,6 +17,49 @@ component extends="Base"
         }
     }
 
+    /**
+     * @hint Get a list of existing permissions
+     * @param-qs ~params/queryString.json
+     * @response-200 ~Permission/responseMany.json
+     */
+    function index(event, rc, prc)
+    {
+        super.index(event, rc, prc);
+    }
+
+    /**
+     * @hint Create a new permission
+     * @requestBody ~Permission/requestBody.json
+     */
+    function create(event, rc, prc)
+    {
+        super.create(event, rc, prc);
+    }
+
+    /**
+     * @hint Get details of a specific permission
+     * @response-200 ~Permission/responseOne.json
+     */
+    function show(event, rc, prc) {
+        super.show(event, rc, prc);
+    }
+
+    /**
+     * @hint Update an exising permission
+     * @requestBody ~Permission/requestBody.json
+     */
+    function update(event, rc, prc) {
+        super.update(event, rc, prc);
+    }
+
+    /**
+     * @hint Delete an existing permission
+     */
+    function delete(event, rc, prc)
+    {
+        super.delete(event, rc, prc);
+    }
+
     function updateBak(event, rc, prc)
     {
         var oUser = ormService.get(rc.userId);

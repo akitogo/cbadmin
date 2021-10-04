@@ -1,0 +1,9 @@
+{
+  "description": "Fields needed to create and/or update a Role",
+  "required": true,
+  "content": {
+    "application/json": {
+      "schema": { "$ref": "/modules/cbadmin/resources/apidocs/Role/object.json" }
+    }
+  }
+}
