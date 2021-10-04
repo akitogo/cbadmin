@@ -22,6 +22,11 @@ component extends="Base"
         rc.excludes ='users';
     }
 
+    /**
+     * @hint Get a list of existing permission groups
+     * @param-qs ~params/queryString.json
+     * @response-200 ~PermissionGroup/responseMany.json
+     */
     function index(event, rc, prc)
     {
         rc.includes ='*';
@@ -30,6 +35,19 @@ component extends="Base"
         super.index(event, rc, prc);
     }
 
+    /**
+     * @hint Create a new permission group
+     * @requestBody ~PermissionGroup/requestBody.json
+     */
+    function create(event, rc, prc)
+    {
+        super.create(event, rc, prc);
+    }
+
+    /**
+     * @hint Get details of a specific permission group
+     * @response-200 ~PermissionGroup/responseOne.json
+     */
     function show(event, rc, prc) {
         
         if(rc.id == 0) {
@@ -38,12 +56,24 @@ component extends="Base"
         super.show(event, rc, prc);
     }
 
+    /**
+     * @hint Update an exising permission group
+     * @requestBody ~PermissionGroup/requestBody.json
+     */
     function update(event, rc, prc) {
         if (rc.id == 0){
             super.create(event, rc, prc);
             return;
         }
         super.update(event, rc, prc);
+    }
+
+    /**
+     * @hint Delete an existing permission group
+     */
+    function delete(event, rc, prc)
+    {
+        super.delete(event, rc, prc);
     }
 
     /**

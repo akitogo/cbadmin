@@ -1,0 +1,9 @@
+{
+  "description": "Query string used for filtering / sorting / paging the returned results",
+  "name": "qs",
+  "required" : false,
+  "schema": {
+    "type": "string"
+  },
+  "in" : "query"
+}

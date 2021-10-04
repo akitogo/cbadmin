@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "required": ["name"],
+  "properties": {
+    "permissionGroupId": {
+      "description": "ID of the permission group (this field is required for PUT/PATCH requests)",
+      "type": "integer",
+      "example": 123
+    },
+    "name": {
+      "description": "Permission group name",
+      "type": "string",
+      "example": "User management"
+    },
+    "description": {
+      "description": "Permission group description",
+      "type": "string",
+      "example": "Group containing all premissions related to user management (ex. create, edit, delete)"
+    },
+    "permissions": {
+      "description": "Array of permissions assigned to this permission group",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "example": [1, 20, 54]
+    }
+  }
+}

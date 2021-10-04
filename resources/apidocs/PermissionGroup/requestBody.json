@@ -1,0 +1,9 @@
+{
+  "description": "Fields needed to create and/or update a Permission Group",
+  "required": true,
+  "content": {
+    "application/json": {
+      "schema": { "$ref": "/modules/cbadmin/resources/apidocs/PermissionGroup/object.json" }
+    }
+  }
+}
