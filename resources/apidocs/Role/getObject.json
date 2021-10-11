@@ -6,26 +6,26 @@
             "description":"isDeleted"
         },
         "numberOfPermissions":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"numberOfPermissions"
+            "example":"4",
+            "type":"integer",
+            "description":"Number of permissions assigned to this role"
         },
         "permissions":{
             "example":[
-                "{ permission object }",
-                "{ permission object }",
-                "{ permission object }"
+                "{ permission object1 }",
+                "{ permission object2 }",
+                "{ permission object3 }"
             ],
             "items":{
                 "type":"object"
             },
             "type":"array",
-            "description":"permissions"
+            "description":"Array of permissions that are assigned to this role. For POST/PUT/PATCH requests this should be a list of permission IDs"
         },
         "numberOfUsers":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"numberOfUsers"
+            "example":"2",
+            "type":"integer",
+            "description":"Number of users having this role"
         },
         "createdDate":{
             "example":"2021-05-29 07:31:06",
@@ -34,7 +34,7 @@
         },
         "roleId":{
             "example":"123",
-            "type":"string",
+            "type":"integer",
             "description":"ID of the role (this field is required for PUT/PATCH requests)"
         },
         "role":{
@@ -48,9 +48,9 @@
             "description":"Date when the object was last modified."
         },
         "description":{
-            "example":"Lorem ipsum dolor sit amet...",
+            "example":"This is the role for system administrators",
             "type":"string",
-            "description":"description"
+            "description":"Description of the role"
         },
         "permissionList":{
             "example":"Lorem ipsum dolor sit amet...",

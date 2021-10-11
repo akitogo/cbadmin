@@ -1,48 +1,36 @@
 {
     "properties":{
         "isDeleted":{
-            "example":true,
+            "example":false,
             "type":"boolean",
-            "description":"isDeleted"
-        },
-        "users":{
-            "example":[
-                "{ user object }",
-                "{ user object }",
-                "{ user object }"
-            ],
-            "items":{
-                "type":"object"
-            },
-            "type":"array",
-            "description":"users"
+            "description":"Flag which marks the entry as removed."
         },
         "numberOfPermissions":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"numberOfPermissions"
+            "example":"4",
+            "type":"integer",
+            "description":"Number of permissions assigned to this permission group"
         },
         "permissionGroupId":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"permissionGroupId"
+            "example":"49",
+            "type":"integer",
+            "description":"ID of the permission group (this field is required for PUT/PATCH requests)"
         },
         "permissions":{
             "example":[
-                "{ permission object }",
-                "{ permission object }",
-                "{ permission object }"
+                "{ permission object 1 }",
+                "{ permission object 2 }",
+                "{ permission object 3 }"
             ],
             "items":{
                 "type":"object"
             },
             "type":"array",
-            "description":"permissions"
+            "description":"Array of permissions that belong to this psermission group (for POST/PUT/PATCH requests this should be an array of permission IDs)"
         },
         "numberOfUsers":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"numberOfUsers"
+            "example":"2",
+            "type":"integer",
+            "description":"Number of users assigned to this permission group"
         },
         "createdDate":{
             "example":"2021-05-29 07:31:06",
@@ -50,9 +38,9 @@
             "description":"Date when the object was created."
         },
         "name":{
-            "example":"Lorem ipsum dolor sit amet...",
+            "example":"user management",
             "type":"string",
-            "description":"name"
+            "description":"Name of the permission group"
         },
         "modifiedDate":{
             "example":"2021-04-22 23:59:59",
@@ -60,9 +48,9 @@
             "description":"Date when the object was last modified."
         },
         "description":{
-            "example":"Lorem ipsum dolor sit amet...",
+            "example":"Permissions related to user management (view, edit, create, delete etc.)",
             "type":"string",
-            "description":"description"
+            "description":"Description of the permission group"
         },
         "permissionList":{
             "example":"Lorem ipsum dolor sit amet...",

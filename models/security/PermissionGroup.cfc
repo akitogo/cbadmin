@@ -15,7 +15,7 @@ component
 {
 	this.memento = {
 		defaultIncludes = [ "*" ]
-		,defaultExcludes = ['users.permissionGroups', 'permissions.permissionGroups' , 'permissions.roles']
+		,defaultExcludes = ['users', 'permissions.permissionGroups' , 'permissions.roles']
   };
 
 	/* *********************************************************************
@@ -29,11 +29,17 @@ component
 	 ********************************************************************* */
 
 	property
-		name     ="permissionGroupId"
-		fieldtype="id"
-		generator="native"
-		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'permissionGroupId_seq' }";
+		name       ="permissionGroupId"
+		fieldtype  ="id"
+		generator  ="native"
+		setter     ="false"
+		params     ="{ allocationSize = 1, sequence = 'permissionGroupId_seq' }"
+		openapidocs="{
+			type = 'integer',
+			description = 'ID of the permission group (this field is required for PUT/PATCH requests)',
+			example = '49',
+			exclude_post = true
+		}";
 
 	property
 		name   ="name"
@@ -42,14 +48,24 @@ component
 		length ="255"
 		unique ="true"
 		default=""
-		index  ="idx_permissionGroupName";
+		index  ="idx_permissionGroupName"
+		openapidocs="{
+			type = 'string',
+			description = 'Name of the permission group',
+			example = 'user management'
+		}";
 
 	property
 		name   ="description"
 		ormtype="string"
 		notnull="false"
 		default=""
-		length ="500";
+		length ="500"
+		openapidocs="{
+			type = 'string',
+			description = 'Description of the permission group',
+			example = 'Permissions related to user management (view, edit, create, delete etc.)'
+		}";
 
 	/* *********************************************************************
 	 **							RELATIONSHIPS
@@ -68,7 +84,13 @@ component
 		cfc              ="cbadmin.models.security.Permission"
 		fkcolumn         ="FK_permissionGroupId"
 		linktable        ="cbadmin_groupPermissions"
-		inversejoincolumn="FK_permissionId";
+		inversejoincolumn="FK_permissionId"
+		openapidocs="{
+			type = 'array',
+			description = 'Array of permissions that belong to this psermission group (for POST/PUT/PATCH requests this should be an array of permission IDs)',
+			get_example = [ '{ permission object 1 }', '{ permission object 2 }', '{ permission object 3 }' ],
+			post_example = [ 23, 94, 15]
+		}";
 
 	// M2M -> users
 	property
@@ -91,17 +113,35 @@ component
 	property
 		name   ="numberOfPermissions"
 		formula="select count(*) from cbadmin_groupPermissions as groupPermissions
-						 where groupPermissions.FK_permissionGroupId = permissionGroupId";
+			where groupPermissions.FK_permissionGroupId = permissionGroupId"
+		openapidocs="{
+			type = 'integer',
+			description = 'Number of permissions assigned to this permission group',
+			example = '4',
+			exclude_post = true
+		}";
 
 	property
 		name   ="numberOfUsers"
-		formula="select count(*) from cbadmin_userPermissionGroups as pg where pg.FK_permissionGroupId = permissionGroupId";
+		formula="select count(*) from cbadmin_userPermissionGroups as pg where
+			pg.FK_permissionGroupId = permissionGroupId"
+		openapidocs="{
+			type = 'integer',
+			description = 'Number of users assigned to this permission group',
+			example = '2',
+			exclude_post = true
+		}";
 
 	/* *********************************************************************
 	 **							NON PERSISTED PROPERTIES
 	 ********************************************************************* */
 
-	property name="permissionList" persistent="false";
+	property
+		name="permissionList"
+		persistent="false"
+		openapidocs="{
+			exclude_post = true
+		}";
 
 	/* *********************************************************************
 	 **							PK + CONSTRAINTS

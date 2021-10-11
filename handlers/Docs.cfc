@@ -28,7 +28,7 @@ component
         abort;
     }
 
-        /**
+    /**
      * This function will generate the JSON for the passed object and create
      * the getObject.json and postObject.json files.
      */
@@ -62,26 +62,28 @@ component
      */
     private function _getObjectProperties(object)
     {
-        // additionally for POST/PUT/PATCH calls, ignore these fields:
-        // when setter is set and is false
-        // when update is set and is false
-        
-        //dump(structKeyArray(object.getMemento()));
-
         var getFields = {};
         var postFields = {};
+
         var propDefinitions = object.$getDeepProperties();
+        var memento = object.getMemento();
 
         for (prop in propDefinitions) {
-            var propDescription = var propType = var propExample = '';
-
-            // Skip duplicates, injections
+            // Skip duplicates and injections
             if (structKeyExists(getFields, prop.name) || structKeyExists(prop, 'inject')
             ) {
                 continue;
             }
 
+            // Skip properties that are not returned by getMemento()
+            if (!structKeyExists(memento, prop.name)) {
+                continue;
+            }
+
+            var propDescription = var propType = var propExample = '';
+
             // Check the 'openapidocs' attribute of the property to pull data.
+            propType = this._getOpenapidocsField(prop, 'type');
             propDescription = this._getOpenapidocsField(prop, 'description');
             propExample = this._getOpenapidocsField(prop, 'example');
 
@@ -100,8 +102,11 @@ component
             // Prepare the struct for GET requests.
             var propExampleGetRequest = propExample;
             if (!Len(propExampleGetRequest)) {
-                if (openapidocsFallback.type == 'array') {
-                    propExampleGetRequest = openapidocsFallback.get_example;
+                if (propType == 'array') {
+                    propExampleGetRequest = this._getOpenapidocsField(prop, 'get_example');
+                    if (!Len(propExampleGetRequest)) {
+                        propExampleGetRequest = openapidocsFallback.get_example;
+                    }
                 } else {
                     propExampleGetRequest = openapidocsFallback.example;
                 }
@@ -122,8 +127,11 @@ component
             if (!BooleanFormat(this._getOpenapidocsField(prop, 'exclude_post'))) {
                 var propExamplePostRequest = propExample;
                 if (!Len(propExamplePostRequest)) {
-                    if (openapidocsFallback.type == 'array') {
-                        propExamplePostRequest = openapidocsFallback.post_example;
+                    if (propType == 'array') {
+                        propExamplePostRequest = this._getOpenapidocsField(prop, 'post_example');
+                        if (!Len(propExamplePostRequest)) {
+                            propExamplePostRequest = openapidocsFallback.post_example;
+                        }
                     } else {
                         propExamplePostRequest = openapidocsFallback.example;
                     }

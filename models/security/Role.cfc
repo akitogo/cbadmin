@@ -32,6 +32,7 @@ component 	persistent="true"
 		generator="native"
 		setter="false"
 		openapidocs="{
+			type = 'integer',
 			description = 'ID of the role (this field is required for PUT/PATCH requests)',
 			example = '123',
 			exclude_post = true
@@ -50,6 +51,7 @@ component 	persistent="true"
 		default=""
 		index="idx_roleName"
 		openapidocs="{
+			type = 'string',
 			description = 'Role name',
 			example = 'administrator'
 		}";
@@ -59,7 +61,12 @@ component 	persistent="true"
 		ormtype="string"
 		notnull="false"
 		default=""
-		length="500";
+		length="500"
+		openapidocs="{
+			type = 'string',
+			description = 'Description of the role',
+			example = 'This is the role for system administrators'
+		}";
 
 	/* *********************************************************************
 	**							RELATIONSHIPS
@@ -78,7 +85,13 @@ component 	persistent="true"
 		cfc									="cbadmin.models.security.Permission"
 		fkcolumn						="FK_roleId"
 		linktable						="cbadmin_rolePermissions"
-		inversejoincolumn		="FK_permissionId";
+		inversejoincolumn		="FK_permissionId"
+		openapidocs					="{
+			type = 'array',
+			description = 'Array of permissions that are assigned to this role. For POST/PUT/PATCH requests this should be a list of permission IDs',
+			get_example = [ '{ permission object 1 }', '{ permission object 2 }', '{ permission object 3 }' ],
+			post_example = [ 111, 222, 333 ]
+		}";
 
 	/* *********************************************************************
 	**							CALUCLATED FIELDS
@@ -88,6 +101,9 @@ component 	persistent="true"
 		name="numberOfPermissions"
 		formula="select count(*) from cbadmin_rolePermissions as rolePermissions where rolePermissions.FK_roleId=roleId"
 		openapidocs="{
+			type = 'integer',
+			description = 'Number of permissions assigned to this role',
+			example = '4',
 			exclude_post = true
 		}";
 
@@ -95,6 +111,9 @@ component 	persistent="true"
 		name="numberOfUsers"
 		formula="select count(*) from cbadmin_user as author where author.FK_roleId=roleId"
 		openapidocs="{
+			type = 'integer',
+			description = 'Number of users having this role',
+			example = '2',
 			exclude_post = true
 		}";
 

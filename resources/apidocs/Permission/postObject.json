@@ -1,58 +1,43 @@
 {
     "properties":{
         "isDeleted":{
-            "example":true,
+            "example":false,
             "type":"boolean",
-            "description":"isDeleted"
+            "description":"Flag which marks the entry as removed."
         },
         "permission":{
-            "example":"Lorem ipsum dolor sit amet...",
+            "example":"create user",
             "type":"string",
-            "description":"permission"
-        },
-        "permissionId":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"permissionId"
-        },
-        "numberOfGroups":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"numberOfGroups"
-        },
-        "numberOfRoles":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"numberOfRoles"
+            "description":"Name of the permission"
         },
         "permissionGroups":{
             "example":[
-                123,
-                456,
-                789
+                147,
+                258,
+                369
             ],
             "items":{
                 "type":"integer"
             },
             "type":"array",
-            "description":"permissionGroups"
+            "description":"Array of permission groups that this permission is assigned to (for POST/PUT/PATCH requests this should be an array of permission group IDs)"
         },
         "roles":{
             "example":[
-                123,
-                456,
-                789
+                15,
+                49,
+                36
             ],
             "items":{
                 "type":"integer"
             },
             "type":"array",
-            "description":"roles"
+            "description":"Array of roles that this permission is assigned to (for POST/PUT/PATCH requests this should be an array of role IDs)"
         },
         "description":{
-            "example":"Lorem ipsum dolor sit amet...",
+            "example":"Allows creating new users",
             "type":"string",
-            "description":"description"
+            "description":"Description of the permission"
         }
     },
     "type":"object"

@@ -1,24 +1,24 @@
 {
     "properties":{
         "isDeleted":{
-            "example":true,
+            "example":false,
             "type":"boolean",
-            "description":"isDeleted"
+            "description":"Flag which marks the entry as removed."
         },
         "permission":{
-            "example":"Lorem ipsum dolor sit amet...",
+            "example":"create user",
             "type":"string",
-            "description":"permission"
+            "description":"Name of the permission"
         },
         "permissionId":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"permissionId"
+            "example":"56",
+            "type":"integer",
+            "description":"ID of the permission (this field is required for PUT/PATCH requests)"
         },
         "numberOfGroups":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"numberOfGroups"
+            "example":8,
+            "type":"integer",
+            "description":"Number of permission groups to which this permission is assigned"
         },
         "createdDate":{
             "example":"2021-05-29 07:31:06",
@@ -26,21 +26,21 @@
             "description":"Date when the object was created."
         },
         "numberOfRoles":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"numberOfRoles"
+            "example":5,
+            "type":"integer",
+            "description":"Number of roles to which this permission is assigned"
         },
         "permissionGroups":{
             "example":[
-                "{ permissionGroup object }",
-                "{ permissionGroup object }",
-                "{ permissionGroup object }"
+                "{ permissionGroup object 1 }",
+                "{ permissionGroup object 2 }",
+                "{ permissionGroup object 3 }"
             ],
             "items":{
                 "type":"object"
             },
             "type":"array",
-            "description":"permissionGroups"
+            "description":"Array of permission groups that this permission is assigned to (for POST/PUT/PATCH requests this should be an array of permission group IDs)"
         },
         "modifiedDate":{
             "example":"2021-04-22 23:59:59",
@@ -49,20 +49,20 @@
         },
         "roles":{
             "example":[
-                "{ role object }",
-                "{ role object }",
-                "{ role object }"
+                "{ role object 1 }",
+                "{ role object 2 }",
+                "{ role object 3 }"
             ],
             "items":{
                 "type":"object"
             },
             "type":"array",
-            "description":"roles"
+            "description":"Array of roles that this permission is assigned to (for POST/PUT/PATCH requests this should be an array of role IDs)"
         },
         "description":{
-            "example":"Lorem ipsum dolor sit amet...",
+            "example":"Allows creating new users",
             "type":"string",
-            "description":"description"
+            "description":"Description of the permission"
         }
     },
     "type":"object"

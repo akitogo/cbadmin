@@ -7,15 +7,15 @@
         },
         "permissions":{
             "example":[
-                123,
-                456,
-                789
+                111,
+                222,
+                333
             ],
             "items":{
                 "type":"integer"
             },
             "type":"array",
-            "description":"permissions"
+            "description":"Array of permissions that are assigned to this role. For POST/PUT/PATCH requests this should be a list of permission IDs"
         },
         "role":{
             "example":"administrator",
@@ -23,9 +23,9 @@
             "description":"Role name"
         },
         "description":{
-            "example":"Lorem ipsum dolor sit amet...",
+            "example":"This is the role for system administrators",
             "type":"string",
-            "description":"description"
+            "description":"Description of the role"
         }
     },
     "type":"object"

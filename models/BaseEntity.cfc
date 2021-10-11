@@ -23,6 +23,7 @@ component
 		update ="false"
 		index  ="idx_createDate"
 		openapidocs = "{
+			type = 'string',
 			description = 'Date when the object was created.',
 			example = '2021-05-29 07:31:06',
 			exclude_post = true
@@ -35,6 +36,7 @@ component
 		notnull="true"
 		index  ="idx_modifiedDate"
 		openapidocs = "{
+			type = 'string',
 			description = 'Date when the object was last modified.',
 			example = '2021-04-22 23:59:59',
 			exclude_post = true
@@ -46,5 +48,10 @@ component
 		notnull  ="true"
 		default  ="false"
 		dbdefault="0"
-		index    ="idx_deleted";
+		index    ="idx_deleted"
+		openapidocs = "{
+			type = 'boolean',
+			description = 'Flag which marks the entry as removed.',
+			example = false
+		}";
 }

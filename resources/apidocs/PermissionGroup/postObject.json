@@ -1,63 +1,31 @@
 {
     "properties":{
         "isDeleted":{
-            "example":true,
+            "example":false,
             "type":"boolean",
-            "description":"isDeleted"
-        },
-        "users":{
-            "example":[
-                123,
-                456,
-                789
-            ],
-            "items":{
-                "type":"integer"
-            },
-            "type":"array",
-            "description":"users"
-        },
-        "numberOfPermissions":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"numberOfPermissions"
-        },
-        "permissionGroupId":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"permissionGroupId"
+            "description":"Flag which marks the entry as removed."
         },
         "permissions":{
             "example":[
-                123,
-                456,
-                789
+                23,
+                94,
+                15
             ],
             "items":{
                 "type":"integer"
             },
             "type":"array",
-            "description":"permissions"
-        },
-        "numberOfUsers":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"numberOfUsers"
+            "description":"Array of permissions that belong to this psermission group (for POST/PUT/PATCH requests this should be an array of permission IDs)"
         },
         "name":{
-            "example":"Lorem ipsum dolor sit amet...",
+            "example":"user management",
             "type":"string",
-            "description":"name"
+            "description":"Name of the permission group"
         },
         "description":{
-            "example":"Lorem ipsum dolor sit amet...",
+            "example":"Permissions related to user management (view, edit, create, delete etc.)",
             "type":"string",
-            "description":"description"
-        },
-        "permissionList":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"permissionList"
+            "description":"Description of the permission group"
         }
     },
     "type":"object"
