@@ -1,9 +1,9 @@
 {
     "properties":{
         "isDeleted":{
-            "example":true,
+            "example":false,
             "type":"boolean",
-            "description":"isDeleted"
+            "description":"Flag which marks the entry as removed."
         },
         "permissions":{
             "example":[

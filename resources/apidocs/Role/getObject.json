@@ -1,9 +1,9 @@
 {
     "properties":{
         "isDeleted":{
-            "example":true,
+            "example":false,
             "type":"boolean",
-            "description":"isDeleted"
+            "description":"Flag which marks the entry as removed."
         },
         "numberOfPermissions":{
             "example":"4",
@@ -12,9 +12,9 @@
         },
         "permissions":{
             "example":[
-                "{ permission object1 }",
-                "{ permission object2 }",
-                "{ permission object3 }"
+                "{ permission object 1 }",
+                "{ permission object 2 }",
+                "{ permission object 3 }"
             ],
             "items":{
                 "type":"object"
