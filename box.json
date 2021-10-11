@@ -32,7 +32,8 @@
         "cborm":"^3.4.0+211",
         "cbmessagebox":"^4.0.0+58",
         "cbantisamy":"^1.3.1-snapshot",
-        "BCrypt":"^3.0.1+34"
+        "BCrypt":"^3.0.1+34",
+        "JSONPrettyPrint":"^1.4.1"
     },
     "installPaths":{
         "cbsecurity":"modules/cbsecurity/",
@@ -40,6 +41,7 @@
         "cborm":"modules/cborm/",
         "cbmessagebox":"modules/cbmessagebox/",
         "cbantisamy":"modules/cbantisamy/",
-        "BCrypt":"modules/BCrypt/"
+        "BCrypt":"modules/BCrypt/",
+        "JSONPrettyPrint":"modules/JSONPrettyPrint/"
     }
 }

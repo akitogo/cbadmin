@@ -1,0 +1,64 @@
+{
+    "properties":{
+        "isDeleted":{
+            "example":true,
+            "type":"boolean",
+            "description":"isDeleted"
+        },
+        "users":{
+            "example":[
+                123,
+                456,
+                789
+            ],
+            "items":{
+                "type":"integer"
+            },
+            "type":"array",
+            "description":"users"
+        },
+        "numberOfPermissions":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"numberOfPermissions"
+        },
+        "permissionGroupId":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"permissionGroupId"
+        },
+        "permissions":{
+            "example":[
+                123,
+                456,
+                789
+            ],
+            "items":{
+                "type":"integer"
+            },
+            "type":"array",
+            "description":"permissions"
+        },
+        "numberOfUsers":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"numberOfUsers"
+        },
+        "name":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"name"
+        },
+        "description":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"description"
+        },
+        "permissionList":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"permissionList"
+        }
+    },
+    "type":"object"
+}

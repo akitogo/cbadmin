@@ -26,25 +26,40 @@ component 	persistent="true"
 	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="roleId"
-				fieldtype="id"
-				generator="native"
-				setter="false"
-				params="{ allocationSize = 1, sequence = 'roleId_seq' }";
+	property
+		name="roleId"
+		fieldtype="id"
+		generator="native"
+		setter="false"
+		openapidocs="{
+			description = 'ID of the role (this field is required for PUT/PATCH requests)',
+			example = '123',
+			exclude_post = true
+		}"
+		params="{
+			allocationSize = 1,
+			sequence = 'roleId_seq'
+		}";
 
-	property 	name="role"
-				ormtype="string"
-				notnull="true"
-				length="255"
-				unique="true"
-				default=""
-				index="idx_roleName";
+	property
+		name="role"
+		ormtype="string"
+		notnull="true"
+		length="255"
+		unique="true"
+		default=""
+		index="idx_roleName"
+		openapidocs="{
+			description = 'Role name',
+			example = 'administrator'
+		}";
 
-	property 	name="description"
-				ormtype="string"
-				notnull="false"
-				default=""
-				length="500";
+	property
+		name="description"
+		ormtype="string"
+		notnull="false"
+		default=""
+		length="500";
 
 	/* *********************************************************************
 	**							RELATIONSHIPS
@@ -69,17 +84,30 @@ component 	persistent="true"
 	**							CALUCLATED FIELDS
 	********************************************************************* */
 
-	property 	name="numberOfPermissions"
-				formula="select count(*) from cbadmin_rolePermissions as rolePermissions where rolePermissions.FK_roleId=roleId";
+	property
+		name="numberOfPermissions"
+		formula="select count(*) from cbadmin_rolePermissions as rolePermissions where rolePermissions.FK_roleId=roleId"
+		openapidocs="{
+			exclude_post = true
+		}";
 
-	property 	name="numberOfUsers"
-				formula="select count(*) from cbadmin_user as author where author.FK_roleId=roleId";
+	property
+		name="numberOfUsers"
+		formula="select count(*) from cbadmin_user as author where author.FK_roleId=roleId"
+		openapidocs="{
+			exclude_post = true
+		}";
 
 	/* *********************************************************************
 	**							NON PERSISTED PROPERTIES
 	********************************************************************* */
 
-	property name="permissionList" 	persistent="false";
+	property
+		name="permissionList"
+		persistent="false"
+		openapidocs="{
+			exclude_post = true
+		}";
 
 	/* *********************************************************************
 	**							PK + CONSTRAINTS

@@ -1,0 +1,32 @@
+{
+    "properties":{
+        "isDeleted":{
+            "example":true,
+            "type":"boolean",
+            "description":"isDeleted"
+        },
+        "permissions":{
+            "example":[
+                123,
+                456,
+                789
+            ],
+            "items":{
+                "type":"integer"
+            },
+            "type":"array",
+            "description":"permissions"
+        },
+        "role":{
+            "example":"administrator",
+            "type":"string",
+            "description":"Role name"
+        },
+        "description":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"description"
+        }
+    },
+    "type":"object"
+}

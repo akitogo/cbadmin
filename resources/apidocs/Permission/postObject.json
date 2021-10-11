@@ -1,0 +1,59 @@
+{
+    "properties":{
+        "isDeleted":{
+            "example":true,
+            "type":"boolean",
+            "description":"isDeleted"
+        },
+        "permission":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"permission"
+        },
+        "permissionId":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"permissionId"
+        },
+        "numberOfGroups":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"numberOfGroups"
+        },
+        "numberOfRoles":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"numberOfRoles"
+        },
+        "permissionGroups":{
+            "example":[
+                123,
+                456,
+                789
+            ],
+            "items":{
+                "type":"integer"
+            },
+            "type":"array",
+            "description":"permissionGroups"
+        },
+        "roles":{
+            "example":[
+                123,
+                456,
+                789
+            ],
+            "items":{
+                "type":"integer"
+            },
+            "type":"array",
+            "description":"roles"
+        },
+        "description":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"description"
+        }
+    },
+    "type":"object"
+}

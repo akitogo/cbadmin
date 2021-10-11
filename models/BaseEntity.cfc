@@ -21,22 +21,30 @@ component
 		ormtype="timestamp"
 		notnull="true"
 		update ="false"
-		index  ="idx_createDate";
+		index  ="idx_createDate"
+		openapidocs = "{
+			description = 'Date when the object was created.',
+			example = '2021-05-29 07:31:06',
+			exclude_post = true
+		}";
 
 	property
 		name   ="modifiedDate"
 		type   ="date"
 		ormtype="timestamp"
 		notnull="true"
-		index  ="idx_modifiedDate";
+		index  ="idx_modifiedDate"
+		openapidocs = "{
+			description = 'Date when the object was last modified.',
+			example = '2021-04-22 23:59:59',
+			exclude_post = true
+		}";
 
 	property
 		name     ="isDeleted"
 		ormtype  ="boolean"
-		
 		notnull  ="true"
 		default  ="false"
 		dbdefault="0"
 		index    ="idx_deleted";
-
 }

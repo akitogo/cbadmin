@@ -2,7 +2,7 @@
   "description": "Role object",
   "content": {
     "application/json": {
-      "schema": { "$ref": "/modules/cbadmin/resources/apidocs/Role/object.json" }
+      "schema": { "$ref": "/modules/cbadmin/resources/apidocs/Role/getObject.json" }
     }
   }
 }

@@ -1,0 +1,62 @@
+{
+    "properties":{
+        "isDeleted":{
+            "example":true,
+            "type":"boolean",
+            "description":"isDeleted"
+        },
+        "numberOfPermissions":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"numberOfPermissions"
+        },
+        "permissions":{
+            "example":[
+                "{ permission object }",
+                "{ permission object }",
+                "{ permission object }"
+            ],
+            "items":{
+                "type":"object"
+            },
+            "type":"array",
+            "description":"permissions"
+        },
+        "numberOfUsers":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"numberOfUsers"
+        },
+        "createdDate":{
+            "example":"2021-05-29 07:31:06",
+            "type":"string",
+            "description":"Date when the object was created."
+        },
+        "roleId":{
+            "example":"123",
+            "type":"string",
+            "description":"ID of the role (this field is required for PUT/PATCH requests)"
+        },
+        "role":{
+            "example":"administrator",
+            "type":"string",
+            "description":"Role name"
+        },
+        "modifiedDate":{
+            "example":"2021-04-22 23:59:59",
+            "type":"string",
+            "description":"Date when the object was last modified."
+        },
+        "description":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"description"
+        },
+        "permissionList":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"permissionList"
+        }
+    },
+    "type":"object"
+}
