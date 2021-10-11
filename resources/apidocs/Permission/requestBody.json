@@ -3,7 +3,7 @@
   "required": true,
   "content": {
     "application/json": {
-      "schema": { "$ref": "/modules/cbadmin/resources/apidocs/Permission/object.json" }
+      "schema": { "$ref": "/modules/cbadmin/resources/apidocs/Permission/postObject.json" }
     }
   }
 }

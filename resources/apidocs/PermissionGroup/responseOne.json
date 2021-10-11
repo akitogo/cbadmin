@@ -2,7 +2,7 @@
   "description": "Permission group object",
   "content": {
     "application/json": {
-      "schema": { "$ref": "/modules/cbadmin/resources/apidocs/PermissionGroup/object.json" }
+      "schema": { "$ref": "/modules/cbadmin/resources/apidocs/PermissionGroup/getObject.json" }
     }
   }
 }

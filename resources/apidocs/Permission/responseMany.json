@@ -5,7 +5,7 @@
       "schema": { 
         "type": "array",
         "items": {
-          "$ref": "/modules/cbadmin/resources/apidocs/Permission/object.json"
+          "$ref": "/modules/cbadmin/resources/apidocs/Permission/getObject.json"
         }
       }
     }
