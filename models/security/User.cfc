@@ -5,87 +5,155 @@
 * ---
 * I am a ContentBox User/Author entity
 */
-component persistent="true" entityname="cbUser" table="cbadmin_user" batchsize="25" cachename="cbUser" cacheuse="read-write" 	extends   ="cbadmin.models.BaseEntity"
+component
+	persistent	="true"
+	entityName	="cbUser"
+	table				="cbadmin_user"
+	extends			="cbadmin.models.BaseEntity"
+	cachename		="cbUser"
+	cacheuse		="read-write"
+	batchsize		="25"
 {
-    this.memento = {
-        defaultIncludes = [ "*" ],
-		defaultExcludes  = [ "password,permissionGroups.users" ]
-    };
+	this.memento = {
+		defaultIncludes = [ "*" ]
+		, defaultExcludes = [ "password", "permissions", "permissionGroups.users", "permissionGroups.permissions", "role.permissions" ]
+	};
 
 	// DI
-	property name="UserService"		inject="UserService@cbadmin" persistent="false";
+	property name="UserService" inject="UserService@cbadmin" persistent="false";
 
 	/* *********************************************************************
 	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="userId"
-				fieldtype="id"
-				generator="native"
-				setter   ="false"
-				params   ="{ allocationSize = 1, sequence = 'userId_seq' }";
+	property
+		name					="userId"
+		fieldtype			="id"
+		generator			="native"
+		setter				="false"
+		params				="{ allocationSize = 1, sequence = 'userId_seq' }"
+		openapidocs		="{
+			type = 'integer',
+			description = 'ID of the user (this field is required for PUT/PATCH requests)',
+			example = '18364',
+			exclude_post = true
+		}";
 
-	property 	name="firstName"
-				length ="100"
-				notnull="true"
-				default="";
+	property
+		name					="firstName"
+		length				="100"
+		notnull				="true"
+		default				=""
+		openapidocs		="{
+			type = 'string',
+			description = 'First name of the user',
+			example = 'John'
+		}";
 
-	property 	name="lastName"
-				length ="100"
-				notnull="true"
-				default="";
+	property
+		name					="lastName"
+		length				="100"
+		notnull				="true"
+		default				=""
+		openapidocs		="{
+			type = 'string',
+			description = 'Last name of the user',
+			example = 'Doe'
+		}";
 
-	property 	name="email"
-				length ="255"
-				notnull="true"
-				index  ="idx_email"
-				default="";
+	property
+		name					="email"
+		length				="255"
+		notnull				="true"
+		index					="idx_email"
+		default				=""
+		openapidocs		="{
+			type = 'string',
+			description = 'E-mail address of the user',
+			example = 'email@example.com'
+		}";
 
-	property 	name="username"
-				length ="100"
-				notnull="true"
-				index  ="idx_login"
-				unique ="true"
-				default="";
+	property
+		name					="username"
+		length				="100"
+		notnull				="true"
+		index					="idx_login"
+		unique				="true"
+		default				=""
+		openapidocs		="{
+			type = 'string',
+			description = 'Username of the user. This is used for logging in',
+			example = 'akiuser'
+		}";
 
-	property 	name="password"
-				length ="100"
-				notnull="true"
-				index  ="idx_login"
-				default="";
+	// password is excluded from Memento
+	property
+		name				="password"
+		length			="100"
+		notnull			="true"
+		index				="idx_login"
+		default			="";
 
-	property 	name="isActive"
-				ormtype="boolean"
-				
-				notnull="true"
-				default="false"
-				index  ="idx_login,idx_activeAuthor";
+	property
+		name					="isActive"
+		ormtype				="boolean"
+		notnull				="true"
+		default				="false"
+		index					="idx_login,idx_activeAuthor"
+		openapidocs		="{
+			type = 'boolean',
+			description = 'Flag marking if a user is active. Inactive users won\'t be able to log in',
+			example = true
+		}";
 
-	property 	name="lastLogin"
-				ormtype="timestamp"
-				notnull="false";
+	property
+		name					="lastLogin"
+		ormtype				="timestamp"
+		notnull				="false"
+		openapidocs		="{
+			type = 'string',
+			description = 'Date and time of the last log in',
+			example = '2021-10-50 15:12:22',
+			exclude_post = true
+		}";
 
-	property 	name="preferences"
-				ormtype="text"
-				notnull="false"
-				length ="8000"
-				default="";
+	property
+		name					="preferences"
+		ormtype				="text"
+		notnull				="false"
+		length				="8000"
+		default				=""
+		openapidocs		="{
+			type = 'string',
+			description = 'Custom user preferences stored in JSON format',
+			example = '{\'color\':\'red\',\'car\':\'mercedes\'}'
+		}";
 
-	property 	name="isPasswordReset"
-				ormtype  ="boolean"
-				
-				notnull  ="true"
-				default  ="false"
-				dbdefault="0"
-				index    ="idx_passwordReset";
+	property
+		name					="isPasswordReset"
+		ormtype				="boolean"
+		notnull				="true"
+		default				="false"
+		dbdefault			="0"
+		index					="idx_passwordReset"
+		openapidocs		="{
+			type = 'boolean',
+			description = 'Flag indicating that the user is resetting their password',
+			example = false
+		}";
 
-	property 	name="is2FactorAuth"
-				ormtype  ="boolean"
-				
-				notnull  ="true"
-				default  ="false"
-				dbdefault="0"
-				index    ="idx_2factorauth";
+	property
+		name					="is2FactorAuth"
+		ormtype				="boolean"
+		notnull				="true"
+		default				="false"
+		dbdefault			="0"
+		index					="idx_2factorauth"
+		openapidocs		="{
+			type = 'boolean',
+			description = 'Flag indicating if the user account uses two factor authentication',
+			example = false
+		}";
 
 	/* *********************************************************************
 	**							RELATIONSHIPS
@@ -99,9 +167,16 @@ component persistent="true" entityname="cbUser" table="cbadmin_user" batchsize="
 		//cascade						= "save-update"
 		cfc								= "cbadmin.models.security.Role"
 		fkcolumn					= "FK_roleId"
-		lazy							= "true";
+		lazy							= "true"
+		openapidocs				= "{
+			type = 'string',
+			description = 'Role object which is assigned to this user (for POST/PUT/PATCH requests this should be a struct with a roleId field)',
+			get_example = '{ role object }',
+			post_example = '{ \'roleId\':some_role_id }'
+		}";
 		//missingrowIgnored	= "true";
 
+	// direct permissions are excluded from Memento (use roles and permission groups instead)
 	// M2M -> A-la-carte Author Permissions
 	property
 		name							= "permissions"
@@ -129,7 +204,13 @@ component persistent="true" entityname="cbUser" table="cbadmin_user" batchsize="
 		fkcolumn					= "FK_userId"
 		linktable					= "cbadmin_userPermissionGroups"
 		inversejoincolumn	= "FK_permissionGroupId"
-		orderby						= "name";
+		orderby						= "name"
+		openapidocs				= "{
+			type = 'array',
+			description = 'Array of permission groups that are assigned to this user (for POST/PUT/PATCH requests this should be an array of permission group IDs)',
+			get_example = [ '{ permission group object 1 }', '{ permission group object 2 }', '{ permission group object 3 }' ],
+			post_example = [ 15, 49, 36 ]
+		}";
 
 	// M2O -> Language
 	property
@@ -441,6 +522,7 @@ component persistent="true" entityname="cbUser" table="cbadmin_user" batchsize="
 	*/
 	struct function getJwtCustomClaims()
 	{
+		// todo: check which fields are really required here
 		return getMemento();
 	}
 	/************************************** PREFERENCE FUNCTIONS *********************************************/

@@ -18,11 +18,11 @@ component extends="Base"
     {
         // it seems that there is a bug with parametername
         // the base handler expects the id to be named id and not whatever you specify in parametername
-        if (structKeyExists(rc,'userid'))
+        if (structKeyExists(rc,'userid')) {
             rc.id = rc.userId;
+        }
 
-        rc.excludes ='permissionGroups.users,permissionGroups.permissions';
-
+        //rc.excludes ='password, permissionGroups.users,permissionGroups.permissions';
     }
 
     // handlers are provided by the base handler
@@ -31,6 +31,22 @@ component extends="Base"
     function index(event, rc, prc)
     {
         super.index(event, rc, prc);
+    }
+
+    /**
+     * Helper function for development to set a new password
+     */
+    function _show()
+    {
+        abort;
+        var user_id = 3;
+        var new_pass = 'test';
+
+        var oUser = ormService.get(user_id);
+        oUser.setPreference('color', 'red');
+        oUser.setPreference('car', 'mercedes');
+        //oUser.setPassword(bCrypt.hashPassword(new_pass));
+        ormService.save(oUser);
     }
 
     function update(event, rc, prc)
@@ -49,8 +65,11 @@ component extends="Base"
             exclude              = "preference,permissions,role,password,permissionGroups"
         );
 
-        var aoPermissionGroups = arrayMap(rc.permissionGroups, function(pg){ return permissionGroupService.get(pg.permissionGroupId); });
-        oUser.updatePermissionGroups(aoPermissionGroups);
+        if (structKeyExists(rc, 'permissionGroups')) {
+            var aoPermissionGroups = arrayMap(rc.permissionGroups, function(pg_id){ return permissionGroupService.get(pg_id); });
+            oUser.updatePermissionGroups(aoPermissionGroups);
+        }
+
         //if( isArray(rc.permissionGroups) ) {
         //    for (var ae in rc.permissionGroups) {
         //        var pg = permissionGroupService.get(ae.permissionGroupId);

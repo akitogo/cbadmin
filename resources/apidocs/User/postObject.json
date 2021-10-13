@@ -1,0 +1,82 @@
+{
+    "properties":{
+        "language":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"language"
+        },
+        "isDeleted":{
+            "example":false,
+            "type":"boolean",
+            "description":"Flag which marks the entry as removed."
+        },
+        "isPasswordReset":{
+            "example":false,
+            "type":"boolean",
+            "description":"Flag indicating that the user is resetting their password"
+        },
+        "isActive":{
+            "example":true,
+            "type":"boolean",
+            "description":"Flag marking if a user is active. Inactive users won't be able to log in"
+        },
+        "is2FactorAuth":{
+            "example":false,
+            "type":"boolean",
+            "description":"Flag indicating if the user account uses two factor authentication"
+        },
+        "lastName":{
+            "example":"Doe",
+            "type":"string",
+            "description":"Last name of the user"
+        },
+        "permissionGroups":{
+            "example":[
+                123,
+                456,
+                789
+            ],
+            "items":{
+                "type":"integer"
+            },
+            "type":"array",
+            "description":"permissionGroups"
+        },
+        "role":{
+            "example":"{ 'roleId':some_role_id }",
+            "type":"string",
+            "description":"Role object which is assigned to this user (for POST/PUT/PATCH requests this should be a struct with a roleId field)"
+        },
+        "preferences":{
+            "example":"{'color':'red','car':'mercedes'}",
+            "type":"string",
+            "description":"Custom user preferences stored in JSON format"
+        },
+        "loggedIn":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"loggedIn"
+        },
+        "firstName":{
+            "example":"John",
+            "type":"string",
+            "description":"First name of the user"
+        },
+        "username":{
+            "example":"akiuser",
+            "type":"string",
+            "description":"Username of the user. This is used for logging in"
+        },
+        "permissionList":{
+            "example":"Lorem ipsum dolor sit amet...",
+            "type":"string",
+            "description":"permissionList"
+        },
+        "email":{
+            "example":"email@example.com",
+            "type":"string",
+            "description":"E-mail address of the user"
+        }
+    },
+    "type":"object"
+}

@@ -8,13 +8,13 @@
 component extends="cborm.models.VirtualEntityService" accessors="true" singleton{
 
 	// DI
-	property name="populator"             inject="wirebox:populator";
-	property name="permissionService"     inject="permissionService@cbadmin";
-	property name="permissionGroupService"	inject="permissionGroupService@cbadmin";
-	property name="roleService"           inject="roleService@cbadmin";
-	property name="bCrypt"                inject="BCrypt@BCrypt";
-	property name="dateUtil"              inject="DateUtil@cbadmin";
-	property name="securityService"       inject="securityService@cbadmin";
+	property name="populator"              inject="wirebox:populator";
+	property name="permissionService"      inject="permissionService@cbadmin";
+	property name="permissionGroupService" inject="permissionGroupService@cbadmin";
+	property name="roleService"            inject="roleService@cbadmin";
+	property name="bCrypt"                 inject="BCrypt@BCrypt";
+	property name="dateUtil"               inject="DateUtil@cbadmin";
+	property name="securityService"        inject="securityService@cbadmin";
 
 	/**
 	 * Constructor

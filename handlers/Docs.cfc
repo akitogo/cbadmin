@@ -14,7 +14,8 @@ component
         var apidocsRootPath = ExpandPath(event.getModuleRoot() & '/resources/apidocs/');
 
         var modelsToGenerate = [
-            { "entityName" = "cbPermission", "dirName" = "Permission" }
+            { "entityName" = "cbUser", "dirName" = "User" }
+            , { "entityName" = "cbPermission", "dirName" = "Permission" }
             , { "entityName" = "cbPermissionGroup", "dirName" = "PermissionGroup" }
             , { "entityName" = "cbRole", "dirName" = "Role" }
         ];
@@ -35,6 +36,11 @@ component
     private function saveObjectJsonToFiles(object, path)
     {
         var objectProperties = this._getObjectProperties(object);
+
+        // If the path doesn't exist, go ahead and create it!
+        if (!DirectoryExists(path)) {
+            directoryCreate(path);
+        }
 
         // Generate and save the getObject.json file
         FileWrite(file = path & '\getObject.json', data = JSONPrettyPrint.formatJSON(_getObjectJson(objectProperties.getFields)), charset = "UTF-8");
@@ -101,13 +107,15 @@ component
 
             // Prepare the struct for GET requests.
             var propExampleGetRequest = propExample;
+            // If the 'example' field is missing, try the 'get_example' field, otherwise use the fallback value
             if (!Len(propExampleGetRequest)) {
-                if (propType == 'array') {
-                    propExampleGetRequest = this._getOpenapidocsField(prop, 'get_example');
-                    if (!Len(propExampleGetRequest)) {
-                        propExampleGetRequest = openapidocsFallback.get_example;
-                    }
-                } else {
+                // first try the 'get_example' field
+                propExampleGetRequest = this._getOpenapidocsField(prop, 'get_example');
+                if (!Len(propExampleGetRequest) && propType == 'array') {
+                    // if the 'get_example' field was missing, use the fallback for array types
+                    propExampleGetRequest = openapidocsFallback.get_example;
+                } elseif (!Len(propExampleGetRequest)) {
+                    // if still empty, use the default fallback example
                     propExampleGetRequest = openapidocsFallback.example;
                 }
             }
@@ -126,13 +134,15 @@ component
             // If this field is not explicitly excluded from POST requests, add it also to the postFields struct.
             if (!BooleanFormat(this._getOpenapidocsField(prop, 'exclude_post'))) {
                 var propExamplePostRequest = propExample;
+                // If the 'example' field is missing, try the 'post_example' field, otherwise use the fallback value
                 if (!Len(propExamplePostRequest)) {
-                    if (propType == 'array') {
-                        propExamplePostRequest = this._getOpenapidocsField(prop, 'post_example');
-                        if (!Len(propExamplePostRequest)) {
-                            propExamplePostRequest = openapidocsFallback.post_example;
-                        }
-                    } else {
+                    // first try the 'post_example' field
+                    propExamplePostRequest = this._getOpenapidocsField(prop, 'post_example');
+                    if (!Len(propExamplePostRequest) && propType == 'array') {
+                        // if the 'post_example' field was missing, use the fallback for array types
+                        propExamplePostRequest = openapidocsFallback.post_example;
+                    } elseif (!Len(propExamplePostRequest)) {
+                        // if still empty, use the default fallback example
                         propExamplePostRequest = openapidocsFallback.example;
                     }
                 }

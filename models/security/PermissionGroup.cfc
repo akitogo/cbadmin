@@ -15,7 +15,7 @@ component
 {
 	this.memento = {
 		defaultIncludes = [ "*" ]
-		,defaultExcludes = ['users', 'permissions.permissionGroups' , 'permissions.roles']
+		, defaultExcludes = [ "users", "permissions.permissionGroups" , "permissions.roles" ]
   };
 
 	/* *********************************************************************
