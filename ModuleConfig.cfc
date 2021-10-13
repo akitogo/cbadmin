@@ -61,11 +61,11 @@ component
 		// for route generation, resources see:
 		// https://coldbox-orm.ortusbooks.com/orm-events/automatic-rest-crud#register-the-resource
 		resources = [
-			{resource = 'config', handler = 'config'},
-			{resource = 'api/user', handler = 'api.user',parameterName='userId'},
-			{resource = 'api/role', handler = 'api.role',parameterName='roleId'},
-			{resource = 'api/permission', handler = 'api.permission',parameterName='permissionId'},
-			{resource = 'api/permissiongroup', handler = 'api.permissiongroup',parameterName='permissiongroupId'}
+			{ resource = 'config', handler = 'config' },
+			{ resource = 'api/user', handler = 'api.user', parameterName = 'userId' },
+			{ resource = 'api/role', handler = 'api.role', parameterName = 'roleId' },
+			{ resource = 'api/permission', handler = 'api.permission', parameterName = 'permissionId' },
+			{ resource = 'api/permissiongroup', handler = 'api.permissiongroup', parameterName = 'permissiongroupId' }
 		];
 
 		// Custom Declared Points

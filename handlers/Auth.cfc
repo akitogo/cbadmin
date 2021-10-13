@@ -134,6 +134,15 @@ component extends="coldbox.system.RestHandler"
     }
 
     /**
+     * Before you physically remove the user account from the database,
+     * first disable the account.
+     */
+    function disableaccount(event, rc, prc)
+    {
+        //
+    }
+
+    /**
      * Activate user's account with token.
      */
     function activateAccount(event, rc, prc)

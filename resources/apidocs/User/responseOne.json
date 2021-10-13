@@ -1,0 +1,8 @@
+{
+  "description": "User object",
+  "content": {
+    "application/json": {
+      "schema": { "$ref": "/modules/cbadmin/resources/apidocs/User/getObject.json" }
+    }
+  }
+}

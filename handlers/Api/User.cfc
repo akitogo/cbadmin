@@ -14,6 +14,11 @@ component extends="Base"
     // used by our base handler
     variables.filter    = ['username','firstName','lastName'];
 
+    this.allowedMethods = {
+        'create' = '',
+        'delete' = ''
+    };
+
     function prehandler(event, rc, prc)
     {
         // it seems that there is a bug with parametername
@@ -28,9 +33,31 @@ component extends="Base"
     // handlers are provided by the base handler
     // see: https://coldbox-orm.ortusbooks.com/orm-events/automatic-rest-crud
 
+    /**
+     * @hint Get a list of users
+     * @param-qs ~params/queryString.json
+     * @response-200 ~User/responseMany.json
+     */
     function index(event, rc, prc)
     {
         super.index(event, rc, prc);
+    }
+
+    /**
+     * @hint This method is blocked. Use auth/register to create new users.
+     */
+    function create(event, rc, prc)
+    {
+        abort;
+    }
+
+    /**
+     * @hint Get details of a specific user
+     * @response-200 ~User/responseOne.json
+     */
+    function show(event, rc, prc)
+    {
+        super.show(event, rc, prc);
     }
 
     /**
@@ -49,6 +76,10 @@ component extends="Base"
         ormService.save(oUser);
     }
 
+    /**
+     * @hint Update an exising user
+     * @requestBody ~User/requestBody.json
+     */
     function update(event, rc, prc)
     {
         var oUser = ormService.get(rc.userId);
@@ -130,5 +161,13 @@ component extends="Base"
         // message
         event.getResponse()
             .setData(oUser.getMemento());
+    }
+
+    /**
+     * @hint This method is blocked. Use auth/disableaccount to disable users' accounts.
+     */
+    function delete(event, rc, prc)
+    {
+        abort;
     }
 }
