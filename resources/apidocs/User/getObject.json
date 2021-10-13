@@ -1,9 +1,9 @@
 {
     "properties":{
         "language":{
-            "example":"Lorem ipsum dolor sit amet...",
+            "example":"{ language object }",
             "type":"string",
-            "description":"language"
+            "description":"Language of the user unterface. GET requests return the language object, for POST/PUT/PATCH requests this should be a struct with a languageId field)"
         },
         "isDeleted":{
             "example":false,
@@ -47,15 +47,15 @@
         },
         "permissionGroups":{
             "example":[
-                "{ permissionGroup object }",
-                "{ permissionGroup object }",
-                "{ permissionGroup object }"
+                "{ permission group object 1 }",
+                "{ permission group object 2 }",
+                "{ permission group object 3 }"
             ],
             "items":{
                 "type":"object"
             },
             "type":"array",
-            "description":"permissionGroups"
+            "description":"Array of permission groups that are assigned to this user (for POST/PUT/PATCH requests this should be an array of permission group IDs)"
         },
         "role":{
             "example":"{ role object }",
@@ -68,9 +68,9 @@
             "description":"Custom user preferences stored in JSON format"
         },
         "loggedIn":{
-            "example":"Lorem ipsum dolor sit amet...",
-            "type":"string",
-            "description":"loggedIn"
+            "example":true,
+            "type":"boolean",
+            "description":"Flag showing if the user is currently logged in"
         },
         "firstName":{
             "example":"John",
@@ -90,7 +90,7 @@
         "permissionList":{
             "example":"Lorem ipsum dolor sit amet...",
             "type":"string",
-            "description":"permissionList"
+            "description":"List of permissions of this user"
         },
         "email":{
             "example":"email@example.com",

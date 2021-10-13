@@ -219,7 +219,13 @@ component
 		fieldtype					= "many-to-one"
 		cfc								= "cbadmin.models.system.CfgLanguage"
 		fkcolumn					= "FK_LanguageId"
-		lazy							= "true";
+		lazy							= "true"
+		openapidocs				= "{
+			type = 'string',
+			description = 'Language of the user unterface. GET requests return the language object, for POST/PUT/PATCH requests this should be a struct with a languageId field)',
+			get_example = '{ language object }',
+			post_example = '{ \'languageId\':some_language_id }'
+		}";
 
 	/* *********************************************************************
 	**							NON PERSISTED PROPERTIES
@@ -230,11 +236,22 @@ component
 		name							= "loggedIn"
 		persistent				= "false"
 		default						= "false"
-		type							= "boolean";
+		type							= "boolean"
+		openapidocs				= "{
+			type = 'boolean',
+			description = 'Flag showing if the user is currently logged in',
+			example = true,
+			exclude_post = true
+		}";
 
 	property
 		name							= "permissionList"
-		persistent				= "false";
+		persistent				= "false"
+		openapidocs				= "{
+			type = 'string',
+			description = 'List of permissions of this user',
+			exclude_post = true
+		}";
 
 	/* *********************************************************************
 	**							PK + CONSTRAINTS
