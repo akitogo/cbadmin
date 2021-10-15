@@ -21,6 +21,8 @@ component extends="Base"
      * @hint Get a list of existing permissions
      * @param-qs ~params/queryString.json
      * @response-200 ~Permission/responseMany.json
+     * @operationId getPermissionsList
+     * @tags Permission
      */
     function index(event, rc, prc)
     {
@@ -30,6 +32,8 @@ component extends="Base"
     /**
      * @hint Create a new permission
      * @requestBody ~Permission/requestBody.json
+     * @operationId createPermission
+     * @tags Permission
      */
     function create(event, rc, prc)
     {
@@ -39,6 +43,8 @@ component extends="Base"
     /**
      * @hint Get details of a specific permission
      * @response-200 ~Permission/responseOne.json
+     * @operationId getOnePermission
+     * @tags Permission
      */
     function show(event, rc, prc) {
         super.show(event, rc, prc);
@@ -47,6 +53,8 @@ component extends="Base"
     /**
      * @hint Update an exising permission
      * @requestBody ~Permission/requestBody.json
+     * @operationId updatePermission
+     * @tags Permission
      */
     function update(event, rc, prc) {
         super.update(event, rc, prc);
@@ -54,6 +62,8 @@ component extends="Base"
 
     /**
      * @hint Delete an existing permission
+     * @operationId deletePermission
+     * @tags Permission
      */
     function delete(event, rc, prc)
     {

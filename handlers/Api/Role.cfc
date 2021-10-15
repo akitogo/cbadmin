@@ -19,6 +19,8 @@ component extends="Base"
      * @hint Get a list of existing roles
      * @param-qs ~params/queryString.json
      * @response-200 ~Role/responseMany.json
+     * @operationId getRoleList
+     * @tags Role
      */
     function index(event, rc, prc)
     {
@@ -30,6 +32,8 @@ component extends="Base"
     /**
      * @hint Create a new role
      * @requestBody ~Role/requestBody.json
+     * @operationId createRole
+     * @tags Role
      */
     function create(event, rc, prc)
     {
@@ -39,6 +43,8 @@ component extends="Base"
     /**
      * @hint Get details of a specific role
      * @response-200 ~Role/responseOne.json
+     * @operationId getOneRole
+     * @tags Role
      */
     function show(event, rc, prc)
     {
@@ -51,6 +57,8 @@ component extends="Base"
     /**
      * @hint Update an exising role
      * @requestBody ~Role/requestBody.json
+     * @operationId updateRole
+     * @tags Role
      */
     function update(event, rc, prc)
     {
@@ -63,6 +71,8 @@ component extends="Base"
 
     /**
      * @hint Delete an existing role
+     * @operationId deleteRole
+     * @tags Role
      */
     function delete(event, rc, prc)
     {

@@ -9,15 +9,10 @@ component extends="Base"
     property name="ormService"                  inject = "userService@cbadmin";
 
     // The name of the entity this resource handler controls. Singular name please.
-    variables.entity 	= "User";
+    variables.entity = "User";
 
     // used by our base handler
-    variables.filter    = ['username','firstName','lastName'];
-
-    this.allowedMethods = {
-        'create' = '',
-        'delete' = ''
-    };
+    variables.filter = ['username', 'firstName', 'lastName'];
 
     function prehandler(event, rc, prc)
     {
@@ -37,6 +32,8 @@ component extends="Base"
      * @hint Get a list of users
      * @param-qs ~params/queryString.json
      * @response-200 ~User/responseMany.json
+     * @operationId getUserList
+     * @tags User
      */
     function index(event, rc, prc)
     {
@@ -46,7 +43,7 @@ component extends="Base"
     /**
      * @hint This method is blocked. Use auth/register to create new users.
      */
-    function create(event, rc, prc)
+    function create(event, rc, prc) allowedMethods=""
     {
         abort;
     }
@@ -54,6 +51,8 @@ component extends="Base"
     /**
      * @hint Get details of a specific user
      * @response-200 ~User/responseOne.json
+     * @operationId getOneUser
+     * @tags User
      */
     function show(event, rc, prc)
     {
@@ -79,6 +78,8 @@ component extends="Base"
     /**
      * @hint Update an exising user
      * @requestBody ~User/requestBody.json
+     * @operationId updateUser
+     * @tags User
      */
     function update(event, rc, prc)
     {
@@ -166,7 +167,7 @@ component extends="Base"
     /**
      * @hint This method is blocked. Use auth/disableaccount to disable users' accounts.
      */
-    function delete(event, rc, prc)
+    function delete(event, rc, prc) allowedMethods=""
     {
         abort;
     }

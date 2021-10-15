@@ -23,6 +23,8 @@ component extends="Base"
      * @hint Get a list of existing permission groups
      * @param-qs ~params/queryString.json
      * @response-200 ~PermissionGroup/responseMany.json
+     * @operationId getPermissionGroupList
+     * @tags PermissionGroup
      */
     function index(event, rc, prc)
     {
@@ -35,6 +37,8 @@ component extends="Base"
     /**
      * @hint Create a new permission group
      * @requestBody ~PermissionGroup/requestBody.json
+     * @operationId createPermissionGroup
+     * @tags PermissionGroup
      */
     function create(event, rc, prc)
     {
@@ -44,6 +48,8 @@ component extends="Base"
     /**
      * @hint Get details of a specific permission group
      * @response-200 ~PermissionGroup/responseOne.json
+     * @operationId getOnePermissionGroup
+     * @tags PermissionGroup
      */
     function show(event, rc, prc) {
         
@@ -56,6 +62,8 @@ component extends="Base"
     /**
      * @hint Update an exising permission group
      * @requestBody ~PermissionGroup/requestBody.json
+     * @operationId updatePermissionGroup
+     * @tags PermissionGroup
      */
     function update(event, rc, prc) {
         if (rc.id == 0){
@@ -67,6 +75,8 @@ component extends="Base"
 
     /**
      * @hint Delete an existing permission group
+     * @operationId deletePermissionGroup
+     * @tags PermissionGroup
      */
     function delete(event, rc, prc)
     {
