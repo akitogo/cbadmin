@@ -54,6 +54,23 @@ component
 
 		// SES Routes
 		routes = [
+			// RESTful api routes for Permissions
+			{ pattern="/api/permission/:permissionId", handler="api.permission", action = { GET: 'show', PUT: 'update', DELETE: 'delete' } },
+			{ pattern="/api/permission", handler="api.permission", action = { GET: 'index', POST: 'create' } },
+
+			// RESTful api routes for PermissionGroups
+			{ pattern="/api/permissiongroup/:permissionGroupId", handler="api.permissiongroup", action = { GET: 'show', PUT: 'update', DELETE: 'delete' } },
+			{ pattern="/api/permissiongroup", handler="api.permissiongroup", action = { GET: 'index', POST: 'create' } },
+
+			// RESTful api routes for Roles
+			{ pattern="/api/role/:roleId", handler="api.role", action = { GET: 'show', PUT: 'update', DELETE: 'delete' } },
+			{ pattern="/api/role", handler="api.role", action = { GET: 'index', POST: 'create' } },
+
+			// RESTful api routes for Users
+			{ pattern="/api/user/:userId", handler="api.user", action = { GET: 'show', PUT: 'update' } },
+			{ pattern="/api/user", handler="api.user", action = { GET: 'index' } },
+
+			// All other routes
 			{ pattern="/login/:action?", handler="login", action="login" },
 			{ pattern="/:handler/:action?" },
 		];
@@ -61,11 +78,11 @@ component
 		// for route generation, resources see:
 		// https://coldbox-orm.ortusbooks.com/orm-events/automatic-rest-crud#register-the-resource
 		resources = [
-			{ resource = 'config', handler = 'config' },
-			{ resource = 'api/user', handler = 'api.user', parameterName = 'userId' },
-			{ resource = 'api/role', handler = 'api.role', parameterName = 'roleId' },
-			{ resource = 'api/permission', handler = 'api.permission', parameterName = 'permissionId' },
-			{ resource = 'api/permissiongroup', handler = 'api.permissiongroup', parameterName = 'permissiongroupId' }
+			//{ resource = 'config', handler = 'config' },
+			//{ resource = 'api/user', handler = 'api.user', parameterName = 'userId' },
+			//{ resource = 'api/role', handler = 'api.role', parameterName = 'roleId' },
+			//{ resource = 'api/permission', handler = 'api.permission', parameterName = 'permissionId' },
+			//{ resource = 'api/permissiongroup', handler = 'api.permissiongroup', parameterName = 'permissiongroupId' }
 		];
 
 		// Custom Declared Points
