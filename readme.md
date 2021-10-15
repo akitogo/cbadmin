@@ -9,7 +9,7 @@ Apache License, Version 2.0.
 
 ## Important Links
 * Source Code - https://github.com/akitogo/cbadmin
-* Documentation - (in progress...)
+* Documentation - https://akitogo.github.io/cbadmin/
 
 ## Quick Installation
 ### 1. Include cbadmin in your project
