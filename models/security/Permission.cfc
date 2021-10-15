@@ -1,10 +1,16 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* A cool Permission entity
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * A cool Permission entity
+ *
+ * *********************************************
+ *
+ * The 'openapidocs' attribute of properties is
+ * used by cbswagger to generate documentation.
+ *
+ */
 component
 	persistent	="true"
 	entityName	="cbPermission"

@@ -1,21 +1,29 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* A cool Role entity
-*/
-component 	persistent="true"
-			entityName="cbRole"
-			table="cbadmin_role"
-			extends="cbadmin.models.BaseEntity"
-			cachename="cbRole"
-			cacheuse="read-write"{
-
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * A cool Role entity
+ *
+ * *********************************************
+ *
+ * The 'openapidocs' attribute of properties is
+ * used by cbswagger to generate documentation.
+ *
+ */
+component
+	persistent	="true"
+	entityName	="cbRole"
+	table				="cbadmin_role"
+	extends			="cbadmin.models.BaseEntity"
+	cachename		="cbRole"
+	cacheuse		="read-write"
+{
 	this.memento = {
 		defaultIncludes = [ "*" ]
 		,defaultExcludes = ['permissions.permissionGroups', 'permissions.roles']
 	};
+
 	/* *********************************************************************
 	**							DI
 	********************************************************************* */

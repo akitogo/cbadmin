@@ -1,10 +1,16 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* I am a ContentBox User/Author entity
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * I am a ContentBox User/Author entity
+ *
+ * *********************************************
+ *
+ * The 'openapidocs' attribute of properties is
+ * used by cbswagger to generate documentation.
+ *
+ */
 component
 	persistent	="true"
 	entityName	="cbUser"
@@ -19,7 +25,10 @@ component
 		, defaultExcludes = [ "password", "permissions", "permissionGroups.users", "permissionGroups.permissions", "role.permissions" ]
 	};
 
-	// DI
+	/* *********************************************************************
+	**							DI
+	********************************************************************* */
+
 	property name="UserService" inject="UserService@cbadmin" persistent="false";
 
 	/* *********************************************************************

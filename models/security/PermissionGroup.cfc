@@ -4,6 +4,12 @@
  * www.ortussolutions.com/products/contentbox
  * ---
  * This entity groups permissions for logical groupings
+ *
+ * *********************************************
+ *
+ * The 'openapidocs' attribute of properties is
+ * used by cbswagger to generate documentation.
+ *
  */
 component
 	persistent="true"
