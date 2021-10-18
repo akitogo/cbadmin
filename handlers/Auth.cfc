@@ -4,16 +4,12 @@ component extends="coldbox.system.RestHandler"
     property name="roleService"         inject="roleService@cbadmin";
     property name="userService"         inject="userService@cbadmin";
     property name="languageService"     inject="CfgLanguageService@cbadmin";
-    property name="cbadminSettings" inject="coldbox:modulesettings:cbadmin";
+    property name="cbadminSettings"     inject="coldbox:modulesettings:cbadmin";
 
     property name="antiSamy"            inject="antisamy@cbantisamy";
     property name="resourceService"     inject="resourceService@cbi18n";
 
     this.allowedMethods = {
-        'login'         = "POST",
-        'logout'        = "POST,GET",
-        'unauthorized'  = "GET,POST",
-        'register'      = "POST",
         'reset'         = "POST"
     };
 
@@ -22,11 +18,19 @@ component extends="coldbox.system.RestHandler"
         //getPageContext().getResponse().setHeader( "Access-Control-Allow-Origin", "*" );
     }
 
+    function test()
+    {
+        dump('test');
+        abort;
+    }
+
     /**
-     * if invalid credentials cbSecurity throws an InvalidCredentials error
-     * the rest handler automatically returns correct response
+     * @hint Try to log a user into the system. If invalid credentials are provided, cbSecurity will thwor an IvalidCredentials error. The REST handler will automatically return the correct response.
+     * @requestBody ~Auth/requestBodyLogin.json
+     * @operationId authLogin
+     * @tags Auth
      */
-    function login( event, rc, prc )
+    function login( event, rc, prc ) allowedMethods="POST"
     {
         auth().authenticate( rc.username, rc.password );
         var token = jwtAuth().attempt( rc.username, rc.password );
@@ -44,13 +48,20 @@ component extends="coldbox.system.RestHandler"
     }
 
     /**
-     * logout
+     * @hint Log user out of the system.
+     * @operationId authLogout
+     * @tags Auth
      */
-    function logout(event, rc, prc)
+    function logout(event, rc, prc) allowedMethods="POST"
     {
         //auth().logout();
-        jwtAuth().logout();
-        event.getResponse().setData( "Successfully logged out" );
+        try {
+            jwtAuth().logout();
+            event.getResponse().setData( "Successfully logged out" );
+        } catch (any error) {
+            event.getResponse().setError(true);
+            event.getResponse().addMessage(error.message);
+        }
     }
 
     /**
@@ -62,12 +73,13 @@ component extends="coldbox.system.RestHandler"
     }
 
     /**
-     * register user
+     * @hint Register a new user.
+     * @requestBody ~Auth/requestBodyRegister.json
+     * @operationId authRegister
+     * @tags Auth
      */
-    function register(event, rc, prc)
+    function register(event, rc, prc) allowedMethods="POST"
     {
-        rc.username = event.getValue('email', '');
-
         var oUser = userService.new( {
             isActive        : false
         } );

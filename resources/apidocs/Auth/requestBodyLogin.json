@@ -1,0 +1,24 @@
+{
+  "description": "Fields required to log a user into the system",
+  "required": true,
+  "content": {
+    "application/json": {
+      "schema": {
+        "type":"object",
+        "properties":{
+          "username":{
+            "type":"string",
+            "description":"The username used to log in",
+            "example":"myuser2021"
+          },
+          "password":{
+            "type":"string",
+            "description":"User's password",
+            "example":"Ae]=a=XWk%qx>JCh"
+          }
+        },
+        "required":["username","password"]
+      }
+    }
+  }
+}

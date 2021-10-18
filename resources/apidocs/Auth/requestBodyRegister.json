@@ -1,0 +1,44 @@
+{
+  "description": "Fields required to log a user into the system",
+  "required": true,
+  "content": {
+    "application/json": {
+      "schema": {
+        "type":"object",
+        "properties":{
+          "firstname":{
+            "type":"string",
+            "description":"The user's first name",
+            "example":"John"
+          },
+          "lastname":{
+            "type":"string",
+            "description":"The user's last name",
+            "example":"Doe"
+          },
+          "email":{
+            "type":"string",
+            "description":"The user's email address",
+            "example":"john@example.com"
+          },
+          "username":{
+            "type":"string",
+            "description":"The user's requested username, which will be used to log into the system.",
+            "example":"johndoe2021"
+          },
+          "password":{
+            "type":"string",
+            "description":"The user's password",
+            "example":"Ae]=a=XWk%qx>JCh"
+          },
+          "acceptPrivacyPolicy":{
+            "type":"boolean",
+            "description":"Flag indicating that the user accepted the privacy policy. This field might be required, depending on module configuration.",
+            "example":false
+          }
+        },
+        "required":["firstname","lastname","email","username","password"]
+      }
+    }
+  }
+}

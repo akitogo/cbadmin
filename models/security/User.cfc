@@ -549,7 +549,11 @@ component
 	struct function getJwtCustomClaims()
 	{
 		// todo: check which fields are really required here
-		return getMemento();
+		var includeFields = ['firstname', 'lastname'];
+		var jwtCustomClaims = getMemento().filter(function(el){
+			return arrayContains(includeFields, LCase(el));
+		});
+		return jwtCustomClaims;
 	}
 	/************************************** PREFERENCE FUNCTIONS *********************************************/
 

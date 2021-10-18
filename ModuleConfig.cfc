@@ -70,6 +70,11 @@ component
 			{ pattern="/api/user/:userId", handler="api.user", action = { GET: 'show', PUT: 'update' } },
 			{ pattern="/api/user", handler="api.user", action = { GET: 'index' } },
 
+			// auth routes
+			{ pattern="/auth/login", handler="auth", action = { POST: 'login' } },
+			{ pattern="/auth/logout", handler="auth", action = { POST: 'logout' } },
+			{ pattern="/auth/register", handler="auth", action = { POST: 'register' } },
+
 			// All other routes
 			{ pattern="/login/:action?", handler="login", action="login" },
 			{ pattern="/:handler/:action?" },
