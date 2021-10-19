@@ -80,6 +80,9 @@ component
 			{ pattern="/auth/checkPasswordResetToken", handler="auth", action = { POST: 'checkPasswordResetToken' } },
 			{ pattern="/auth/saveNewPassword", handler="auth", action = { POST: 'saveNewPassword' } },
 
+			// config routes
+			{ pattern="/config", handler="config", action = { GET: 'index' } },
+
 			// All other routes
 			{ pattern="/login/:action?", handler="login", action="login" },
 			{ pattern="/:handler/:action?" },

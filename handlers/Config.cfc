@@ -6,7 +6,12 @@
         'index'         = "GET",
     };
 
-    function index(event, rc, prc)
+    /**
+     * @hint Get the module configuration (ex. settings required on the registration page)
+     * @operationId configGet
+     * @tags Config
+     */
+    function index(event, rc, prc) allowedMethods="GET"
     {
         event.getResponse()
             .setData({
