@@ -1,0 +1,19 @@
+{
+  "description": "Fields required to activate a new account",
+  "required": true,
+  "content": {
+    "application/json": {
+      "schema": {
+        "type":"object",
+        "properties":{
+          "token":{
+            "type":"string",
+            "description":"Account activation token",
+            "example":"BC7395219AA7E9BACE59323EEE8E2FAA"
+          }
+        },
+        "required":["token"]
+      }
+    }
+  }
+}

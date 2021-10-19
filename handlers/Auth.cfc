@@ -9,10 +9,6 @@ component extends="coldbox.system.RestHandler"
     property name="antiSamy"            inject="antisamy@cbantisamy";
     property name="resourceService"     inject="resourceService@cbi18n";
 
-    this.allowedMethods = {
-        'reset'         = "POST"
-    };
-
     function preHandler( event, rc, prc )
     {
         //getPageContext().getResponse().setHeader( "Access-Control-Allow-Origin", "*" );
@@ -62,14 +58,6 @@ component extends="coldbox.system.RestHandler"
             event.getResponse().setError(true);
             event.getResponse().addMessage(error.message);
         }
-    }
-
-    /**
-     * throws an InvalidCredentials error
-     */
-    function unauthorized(event, rc, prc)
-    {
-        throw(type="InvalidCredentials");
     }
 
     /**
@@ -146,33 +134,12 @@ component extends="coldbox.system.RestHandler"
     }
 
     /**
-     * Before you physically remove the user account from the database,
-     * first disable the account.
+     * @hint Check if the account activation token is valid.
+     * @requestBody ~Auth/requestBodyCheckAccountActivationToken.json
+     * @operationId authCheckAccountActivationToken
+     * @tags Auth
      */
-    function disableaccount(event, rc, prc)
-    {
-        //
-    }
-
-    /**
-     * Activate user's account with token.
-     */
-    function activateAccount(event, rc, prc)
-    {
-        var activation = securityService.activateAccount(rc.token);
-        event.getResponse().setError(activation.error);
-        for (var msg in activation.messages) {
-            event.getResponse().addMessage(msg);
-        }
-
-        // We need to reset the view, otherwise a 'missinginclude' exception will be thrown.
-        event.setView('');
-    }
-
-    /**
-     * Check if the account activation token is valid.
-     */
-    function checkAccountActivationToken(event, rc, prc)
+    function checkAccountActivationToken(event, rc, prc) allowedMethods="POST"
     {
         var validation = securityService.validateAccountActivationToken(rc.token);
 
@@ -185,56 +152,30 @@ component extends="coldbox.system.RestHandler"
     }
 
     /**
-     * Check if the password reseet token is valid.
+     * @hint Activate user's account with token.
+     * @requestBody ~Auth/requestBodyActivateAccount.json
+     * @operationId authActivateAccount
+     * @tags Auth
      */
-    function checkPasswordResetToken(event, rc, prc)
+    function activateAccount(event, rc, prc) allowedMethods="POST"
     {
-        var validation = securityService.validatePasswordResetToken(rc.token);
-
-        event.getResponse().setError(validation.error);
-        for (var msg in validation.messages) {
+        var activation = securityService.activateAccount(rc.token);
+        event.getResponse().setError(activation.error);
+        for (var msg in activation.messages) {
             event.getResponse().addMessage(msg);
         }
-    }
 
-    function saveNewPassword(event, rc, prc)
-    {
-        // This check might appear redundant here, but is required as we need the user
-        // object to pass to the securityService.resetUserPassword() method below.
-        this.checkPasswordResetToken(event, rc, prc);
-        if (event.getResponse().getError()) {
-            return;
-        }
-
-        // Makre sure that the passwords are identical.
-        if (Compare(rc.newPassword, rc.repeatPassword)) {
-            event.getResponse()
-                .setError(true)
-                .addMessage('Passwords must be identical!');
-            return;
-        }
-
-        // Finally, save the new password.
-        var validation = securityService.validatePasswordResetToken(rc.token);
-        var result = securityService.resetUserPassword(rc.token, validation.user, rc.newPassword);
-
-        // We need to reset the view because otherwise the sendPasswordReminder method above will throw
-        // a 'missinginclude' exception while trying to load /layouts/admin.cfm.
+        // We need to reset the view, otherwise a 'missinginclude' exception will be thrown.
         event.setView('');
-
-        event.getResponse()
-            .setError(result.error)
-        for (var msg in result.messages) {
-            event.getResponse()
-                .addMessage(msg);
-        }
     }
 
     /**
-     * Do lost password reset
-     * requires email, firstnam and lastname to identify user
+     * @hint Request reset password link. Requires firstname, lastname and email to identify the user.
+     * @requestBody ~Auth/requestBodyRequestPasswordReset.json
+     * @operationId authRequestPasswordReset
+     * @tags Auth
      */
-    function reset( event, rc, prc )
+    function reset( event, rc, prc ) allowedMethods="POST"
     {
         param rc.email = '';
         param rc.firstname ='';
@@ -278,6 +219,78 @@ component extends="coldbox.system.RestHandler"
 
         event.getResponse()
             .addMessage(resourceService.getResource( resource='messages.reminder_sent@login', values="15" ));
+    }
+
+    /**
+     * @hint Check if the password reset token is valid.
+     * @requestBody ~Auth/requestBodyCheckPasswordResetToken.json
+     * @operationId authCheckPasswordResetToken
+     * @tags Auth
+     */
+    function checkPasswordResetToken(event, rc, prc) allowedMethods="POST"
+    {
+        var validation = securityService.validatePasswordResetToken(rc.token);
+
+        event.getResponse().setError(validation.error);
+        for (var msg in validation.messages) {
+            event.getResponse().addMessage(msg);
+        }
+    }
+
+    /**
+     * @hint Update the user's password. Requires a valid password reset token.
+     * @requestBody ~Auth/requestBodySaveNewPassword.json
+     * @operationId authSaveNewPassword
+     * @tags Auth
+     */
+    function saveNewPassword(event, rc, prc) allowedMethods="POST"
+    {
+        // This check might appear redundant here, but is required as we need the user
+        // object to pass to the securityService.resetUserPassword() method below.
+        this.checkPasswordResetToken(event, rc, prc);
+        if (event.getResponse().getError()) {
+            return;
+        }
+
+        // Makre sure that the passwords are identical.
+        if (Compare(rc.newPassword, rc.repeatPassword)) {
+            event.getResponse()
+                .setError(true)
+                .addMessage('Passwords must be identical!');
+            return;
+        }
+
+        // Finally, save the new password.
+        var validation = securityService.validatePasswordResetToken(rc.token);
+        var result = securityService.resetUserPassword(rc.token, validation.user, rc.newPassword);
+
+        // We need to reset the view because otherwise the sendPasswordReminder method above will throw
+        // a 'missinginclude' exception while trying to load /layouts/admin.cfm.
+        event.setView('');
+
+        event.getResponse()
+            .setError(result.error)
+        for (var msg in result.messages) {
+            event.getResponse()
+                .addMessage(msg);
+        }
+    }
+
+    /**
+     * Before you physically remove the user account from the database,
+     * first disable the account.
+     */
+    function disableaccount(event, rc, prc)
+    {
+        // todo
+    }
+
+    /**
+     * throws an InvalidCredentials error
+     */
+    function unauthorized(event, rc, prc)
+    {
+        throw(type="InvalidCredentials");
     }
 
     /*******************************************

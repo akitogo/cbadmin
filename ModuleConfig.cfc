@@ -74,6 +74,11 @@ component
 			{ pattern="/auth/login", handler="auth", action = { POST: 'login' } },
 			{ pattern="/auth/logout", handler="auth", action = { POST: 'logout' } },
 			{ pattern="/auth/register", handler="auth", action = { POST: 'register' } },
+			{ pattern="/auth/checkAccountActivationToken", handler="auth", action = { POST: 'checkAccountActivationToken' } },
+			{ pattern="/auth/activateAccount", handler="auth", action = { POST: 'activateAccount' } },
+			{ pattern="/auth/reset", handler="auth", action = { POST: 'reset' } },
+			{ pattern="/auth/checkPasswordResetToken", handler="auth", action = { POST: 'checkPasswordResetToken' } },
+			{ pattern="/auth/saveNewPassword", handler="auth", action = { POST: 'saveNewPassword' } },
 
 			// All other routes
 			{ pattern="/login/:action?", handler="login", action="login" },
