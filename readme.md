@@ -90,7 +90,4 @@ Once you complete these steps, you should be able to use the API provided by cba
 
 ## Available API methods
 
-### User management
-...
-### Permission management
-...
+All available API methods can be found in the documentation: https://akitogo.github.io/cbadmin/
