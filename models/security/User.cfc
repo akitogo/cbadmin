@@ -75,6 +75,7 @@ component
 		length				="255"
 		notnull				="true"
 		index					="idx_email"
+		unique				="true"
 		default				=""
 		openapidocs		="{
 			type = 'string',
