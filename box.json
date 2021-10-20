@@ -1,13 +1,13 @@
 {
     "name":"cbadmin",
-    "version":"0.0.4",
+    "version":"0.0.5",
     "author":"Akitogo Internet and Media Applications GmbH <info@akitogo.com>",
     "slug":"cbadmin",
     "type":"modules",
     "homepage":"https://github.com/akitogo/cbadmin",
-    "documentation":"",
+    "documentation":"https://akitogo.github.io/cbadmin/",
     "repository":{
-        "type":"zip",
+        "type":"github",
         "URL":"https://github.com/akitogo/cbadmin"
     },
     "shortDescription":"This module provides a JWT-secured, back-end API for user, role and permission management, intended for ColdBox applications.",
