@@ -136,4 +136,22 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 		return roleIds;
 	}
+
+	/**
+	 * This method will check that the default 'User' role is present in the database.
+	 * If not, the role will be created.
+	 */
+	RoleService function preFlightCheck()
+	{
+		var role = this.findWhere( { role : 'User' } );
+		if (isNull(role)) {
+			var defaultUser = new({
+				role: 'User',
+				description: 'this is the standard user role'
+			});
+			save(defaultUser);
+		}
+
+		return this;
+	}
 }

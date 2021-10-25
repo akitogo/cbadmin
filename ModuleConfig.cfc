@@ -140,9 +140,13 @@ component
 	*/
 	function onLoad()
 	{
-		var settingService = wirebox.getInstance( "settingService@cbadmin" );
 		// Pre-flight check settings
+		var settingService = wirebox.getInstance( "settingService@cbadmin" );
 		settingService.preFlightCheck();
+
+		// Pre-flight check for the Role service
+		var roleService = wirebox.getInstance( "roleService@cbadmin" );
+		roleService.preFlightCheck();
 
 		// Startup localization settings
 		//if( controller.getSetting( 'using_i18n' ) ){
