@@ -1,4 +1,4 @@
-﻿# Welcome to cbadmin
+# Welcome to cbadmin
 Cbadmin is a ColdBox module which provides a JWT-secured, back-end API for user, role and permission management, intended for ColdBox applications.
 
 ## Important copyright notice
@@ -21,16 +21,10 @@ box install cbadmin
 
 This will download cbadmin along with all required dependencies.
 
-### 2. Set up a database and import the template table structure
-Use the template sql file to create the required table structure in your database. You will find the sql file in the root directory of the module ("cbadmin-db-template.sql").
+### 2. Set up a database, create a datasource and configure ORM
+Set up a database for your project and create a datasource for it. Update your Application.cfc file to use this datasource. If your project is already using a database, you can use that one.
 
-You should also set the following keys in the `cbadmin_setting` table:
-* `CBADMIN_MAIL_SERVER` - IP address of email server which will be used to send out emails
-* `cbadmin_outgoingEmail` - email address used as the sender of outgoing emails
-* `cbadmin_email` - email address of the admin of your application for contact purposes (the one you would show on a 'contact us' page)
-
-### 3. Setup required in your main Application.cfc file
-1. First, you need to have your datasource defined and ORM enabled:
+In Application.cfc:
 ```
 // Datasource definition
 this.datasource = 'place-your-datasource-name-here';
@@ -46,8 +40,9 @@ this.ormSettings = {
 		// Custom Module Entities
 		"modules_app"
 	],
-	//dialect             : "MySQLDialect", // SQL Server Dialect
+	dialect               : "MySQLDialect", // SQL Server Dialect
 	// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
+	// if the tables are not created automaticaly, use 'dropcreate' and then revert to 'update'
 	dbcreate              : "update",
 	// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
 	secondarycacheenabled : false,
@@ -63,11 +58,15 @@ this.ormSettings = {
 	skipCFCWithError      : true
 };
 ```
-2. Next, add a mapping for cbadmin:
+
+NOTE: If the database structure is not created for you automatically after server (re)start, you might need to use `dbcreate: "dropcreate"` to force the creation of the tables, then revert back to `dbcreate: "update"`.
+
+### 3. Other setup required in your main Application.cfc file
+1. Add a mapping for cbadmin:
 ```
 this.mappings[ "cbadmin" ] = COLDBOX_APP_ROOT_PATH & "/modules/cbadmin";
 ```
-3. You might also need to add this little bit if you fall into an error with a missing `cbBootstrap` key on `onRequestStart()` or `onSessionStart()`:
+2. You might also need to add this little bit if you fall into an error with a missing `cbBootstrap` key on `onRequestStart()` or `onSessionStart()`:
 ```
 if (!structKeyExists(application, "cbBootstrap")) {
 	onApplicationStart();
@@ -85,8 +84,20 @@ moduleSettings = {
 	}
 };
 ```
+### 5. (re)Start your server to create the database structure
+Now you should be ready to (re)start your server, and all the required tables in the database should be created automatically.
+If you happen to see a `could not execute query` error, check if the database tables got created in the database. If they didn't, you might need to use `dbcreate: "dropcreate"` in your Application.cfc config file (see comment in the "Set up a dabase" section above).
+```
+box server restart
+```
+
+Once your tables are created in the database, make sure you have the following keys in the `cbadmin_setting` table:
+* `CBADMIN_MAIL_SERVER` - IP address of email server which will be used to send out emails
+* `cbadmin_outgoingEmail` - email address used as the sender of outgoing emails
+* `cbadmin_email` - email address of the admin of your application for contact purposes (the one you would show on a 'contact us' page)
 
 Once you complete these steps, you should be able to use the API provided by cbadmin in your application.
+
 
 ## Available API methods
 
