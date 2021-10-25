@@ -148,6 +148,10 @@ component
 		var roleService = wirebox.getInstance( "roleService@cbadmin" );
 		roleService.preFlightCheck();
 
+		// Pre-flight check for the CfgLanguage service
+		var cfgLangService = wirebox.getInstance( "cfgLanguageService@cbadmin" );
+		cfgLangService.preFlightCheck();
+
 		// Startup localization settings
 		//if( controller.getSetting( 'using_i18n' ) ){
 			// Load resource bundles here when ready

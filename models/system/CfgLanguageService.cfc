@@ -5,8 +5,8 @@
 * ---
 * Security rules manager
 */
-component extends="cborm.models.VirtualEntityService" singleton{
-	
+component extends="cborm.models.VirtualEntityService" singleton
+{
 	/**
 	* Constructor
 	*/
@@ -17,4 +17,21 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		return this;
 	}
 
+	/**
+	 * This method will check that the default 'en_EN' language is present in the database.
+	 * If not, the entry will be created.
+	 */
+	CfgLanguageService function preFlightCheck()
+	{
+		var lang = this.findWhere( { locale : 'en_EN' } );
+		if (isNull(lang)) {
+			var defaultLang = new({
+				locale: 'en_EN',
+				name: 'English'
+			});
+			save(defaultLang);
+		}
+
+		return this;
+	}
 }
