@@ -92,7 +92,7 @@ box server restart
 ```
 
 Once your tables are created in the database, make sure you have the following keys in the `cbadmin_setting` table:
-* `CBADMIN_MAIL_SERVER` - IP address of email server which will be used to send out emails
+* `cbadmin_mail_server` - IP address of email server which will be used to send out emails
 * `cbadmin_outgoingEmail` - email address used as the sender of outgoing emails
 * `cbadmin_email` - email address of the admin of your application for contact purposes (the one you would show on a 'contact us' page)
 
