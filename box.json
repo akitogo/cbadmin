@@ -10,7 +10,7 @@
         "type":"github",
         "URL":"https://github.com/akitogo/cbadmin"
     },
-    "shortDescription":"This module provides a JWT-secured, back-end API for user, role and permission management, intended for ColdBox applications.",
+    "shortDescription":"Provides a JWT-secured, back-end API for user, role and permission management, intended for ColdBox applications.",
     "license":[
         {
             "type":"Apache2",
