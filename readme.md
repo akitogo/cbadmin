@@ -1,5 +1,7 @@
 # Welcome to cbadmin
-Cbadmin is a ColdBox module which provides a JWT-secured, back-end API for user, role and permission management, intended for ColdBox applications.
+Cbadmin is a headless ColdBox module which provides a JWT-secured, back-end API for user, role and permission management, intended for ColdBox applications.
+
+If you are looking for a frontend, install afterwards https://github.com/akitogo/cbadmin-vue-argon
 
 ## Important copyright notice
 A large part of this module is based on contentbox (https://www.forgebox.io/view/contentbox)
@@ -13,13 +15,19 @@ Apache License, Version 2.0.
 
 ## Quick Installation
 ### 1. Include cbadmin in your project
-Cbadmin contains a `box.json` file, so it can leverage [CommandBox](http://www.ortussolutions.com/products/commandbox) for its dependencies. To include cbadmin in your project, go to your project root and type:
+Cbadmin contains a `box.json` file, so it can leverage [CommandBox](http://www.ortussolutions.com/products/commandbox) for its dependencies. To include cbadmin in your Coldbox project, go to your project root and type:
 
 ```bash
 box install cbadmin
 ```
 
-This will download cbadmin along with all required dependencies.
+This will download cbadmin along with all required dependencies, but requires a basic Coldbox app structure.
+
+If you start from scratch, please install a Coldbox app template first, e.g.
+
+```bash
+box install cbtemplate-advanced-script
+```
 
 ### 2. Set up a database, create a datasource and configure ORM
 Set up a database for your project and create a datasource for it. Update your Application.cfc file to use this datasource. If your project is already using a database, you can use that one.
