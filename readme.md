@@ -106,7 +106,10 @@ Once your tables are created in the database, make sure you have the following k
 
 Once you complete these steps, you should be able to use the API provided by cbadmin in your application.
 
-
+### 6. Required database changes
+* register a new user by calling https://akitogo.github.io/cbadmin/#operation/authRegister
+* connect to your database, add two roles to table cbadmin_role: User, admin
+* note the role id of admin, in cbadmin_user update FK_roleId with admin role id
 ## Available API methods
 
 All available API methods can be found in the documentation: https://akitogo.github.io/cbadmin/
