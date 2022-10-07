@@ -84,7 +84,6 @@ component
 		
 		notnull  ="false"
 		default  ="false"
-		dbdefault="0";
 
 	property
 		name   ="action"

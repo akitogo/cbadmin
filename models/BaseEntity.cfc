@@ -21,7 +21,6 @@ component
 		ormtype="timestamp"
 		notnull="true"
 		update ="false"
-		index  ="idx_createDate"
 		openapidocs = "{
 			type = 'string',
 			description = 'Date when the object was created.',
@@ -34,7 +33,6 @@ component
 		type   ="date"
 		ormtype="timestamp"
 		notnull="true"
-		index  ="idx_modifiedDate"
 		openapidocs = "{
 			type = 'string',
 			description = 'Date when the object was last modified.',
@@ -47,8 +45,6 @@ component
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="0"
-		index    ="idx_deleted"
 		openapidocs = "{
 			type = 'boolean',
 			description = 'Flag which marks the entry as removed.',

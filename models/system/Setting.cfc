@@ -41,7 +41,6 @@ component  	persistent="true"
 		
 		notnull  ="true"
 		default  ="false"
-		dbdefault="0"
 		index    ="idx_core";
 
 	/* *********************************************************************

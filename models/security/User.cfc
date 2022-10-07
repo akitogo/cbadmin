@@ -144,7 +144,6 @@ component
 		ormtype				="boolean"
 		notnull				="true"
 		default				="false"
-		dbdefault			="0"
 		index					="idx_passwordReset"
 		openapidocs		="{
 			type = 'boolean',
@@ -157,7 +156,6 @@ component
 		ormtype				="boolean"
 		notnull				="true"
 		default				="false"
-		dbdefault			="0"
 		index					="idx_2factorauth"
 		openapidocs		="{
 			type = 'boolean',
